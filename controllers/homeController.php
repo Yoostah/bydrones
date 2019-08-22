@@ -1,10 +1,12 @@
 <?php
-class homeController extends controller {
+class homeController extends controller
+{
 
-	public function index() {
+	public function index()
+	{
 		$dados = array();
 
-		$a = new Anuncios();
+		/*$a = new Anuncios();
 		$u = new Usuarios();
 		$c = new Categorias();
 
@@ -15,17 +17,17 @@ class homeController extends controller {
 		);
 		if(isset($_GET['filtros'])) {
 			$filtros = $_GET['filtros'];
-		}
+		}*/
 
-		$total_anuncios = $a->getTotalAnuncios($filtros);
-		$total_usuarios = $u->getTotalUsuarios();
+		//$total_anuncios = $a->getTotalAnuncios($filtros);
+		//$total_usuarios = $u->getTotalUsuarios();
 
-		$p = 1;
+		/*$p = 1;
 		if(isset($_GET['p']) && !empty($_GET['p'])) {
 			$p = addslashes($_GET['p']);
-		}
+		}*/
 
-		$por_pagina = 2;
+		/*$por_pagina = 2;
 		$total_paginas = ceil($total_anuncios / $por_pagina);
 
 		$anuncios = $a->getUltimosAnuncios($p, $por_pagina, $filtros);
@@ -36,10 +38,8 @@ class homeController extends controller {
 		$dados['categorias'] = $categorias;
 		$dados['filtros'] = $filtros;
 		$dados['anuncios'] = $anuncios;
-		$dados['total_paginas'] = $total_paginas;
+		$dados['total_paginas'] = $total_paginas;*/
 
 		$this->loadTemplate('home', $dados);
-
 	}
-
 }

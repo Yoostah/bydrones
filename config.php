@@ -3,7 +3,7 @@ require 'environment.php';
 
 $config = array();
 if (ENVIRONMENT == 'development') {
-	define("BASE_URL", "http://localhost/bydrones/");
+	define("BASE_URL", "http://localhost:8080/bydrones/");
 	$config['dbname'] = 'classificados';
 	$config['host'] = 'localhost';
 	$config['dbuser'] = 'root';
