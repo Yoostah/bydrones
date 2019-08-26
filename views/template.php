@@ -13,7 +13,6 @@
 =========================================================
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. -->
-<?php print_r($_POST); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,7 +42,7 @@
       </button>
       <!-- Brand -->
       <a class="navbar-brand pt-0" href="./index.html">
-        <img src="<?php echo BASE_URL; ?>assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
+        <img src="<?php echo BASE_URL; ?>assets/img/brand/logo_only.svg" class="navbar-brand-img" alt="...">
       </a>
       <!-- User -->
       <ul class="nav align-items-center d-md-none">
