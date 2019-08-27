@@ -129,6 +129,17 @@
         <!-- Divider -->
         <hr class="my-3">
         <!-- Heading -->
+        <h6 class="navbar-heading text-muted">Variáveis</h6>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link " href="<?php echo BASE_URL; ?>peso">
+              <i class="ni ni-chart-bar-32 text-primary"></i> Pesos
+            </a>
+          </li>
+        </ul>
+        <!-- Divider -->
+        <hr class="my-3">
+        <!-- Heading -->
         <h6 class="navbar-heading text-muted">Painel Administrativo</h6>
         <!-- Navigation -->
         <ul class="navbar-nav mb-md-3">
@@ -151,7 +162,8 @@
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
       <div class="container-fluid">
         <!-- CRUMB -->
-        <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="./index.html">Dashboard</a>
+        <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
+          href="<?php echo BASE_URL; ?>">Dashboard</a>
         <!-- BUSCA -->
         <!-- <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
           <div class="form-group mb-0">

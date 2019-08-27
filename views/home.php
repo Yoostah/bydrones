@@ -15,8 +15,8 @@
                   <span class="h2 font-weight-bold mb-0">12</span>
                 </div>
                 <div class="col-auto">
-                  <div class="icon icon-shape bg-info text-white rounded-circle shadow">
-                    <i class="fas fa-chart-bar"></i>
+                  <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                    <i class="ni ni-send"></i>
                   </div>
                 </div>
               </div>
@@ -36,8 +36,8 @@
                   <span class="h2 font-weight-bold mb-0">2</span>
                 </div>
                 <div class="col-auto">
-                  <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
-                    <i class="fas fa-chart-pie"></i>
+                  <div class="icon icon-shape bg-success text-white rounded-circle shadow">
+                    <i class="ni ni-spaceship"></i>
                   </div>
                 </div>
               </div>
@@ -53,12 +53,12 @@
             <div class="card-body">
               <div class="row">
                 <div class="col">
-                  <h5 class="card-title text-uppercase text-muted mb-0">Vôos Concluído</h5>
+                  <h5 class="card-title text-uppercase text-muted mb-0">Vôos Concluídos</h5>
                   <span class="h2 font-weight-bold mb-0">77</span>
                 </div>
                 <div class="col-auto">
-                  <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
-                    <i class="fas fa-users"></i>
+                  <div class="icon icon-shape bg-info text-white rounded-circle shadow">
+                    <i class="ni ni-check-bold"></i>
                   </div>
                 </div>
               </div>
@@ -78,7 +78,7 @@
                   <span class="h2 font-weight-bold mb-0">49,65%</span>
                 </div>
                 <div class="col-auto">
-                  <div class="icon icon-shape bg-info text-white rounded-circle shadow">
+                  <div class="icon icon-shape bg-dark text-white rounded-circle shadow">
                     <i class="fas fa-percent"></i>
                   </div>
                 </div>
