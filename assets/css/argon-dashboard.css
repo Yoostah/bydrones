@@ -20,7 +20,7 @@
   --indigo: #5603ad;
   --purple: #8965e0;
   --pink: #f3a4b5;
-  --red: #f5365c;
+  --red: #8a0404;
   --orange: #fb6340;
   --yellow: #ffd600;
   --green: #2dce89;
@@ -31,7 +31,7 @@
   --gray-dark: #32325d;
   --light: #ced4da;
   --lighter: #e9ecef;
-  --primary: #5e72e4;
+  --primary: #02374c;
   --secondary: #f7fafc;
   --success: #2dce89;
   --info: #11cdef;
@@ -1985,7 +1985,6 @@ pre code {
 .table-responsive {
   display: block;
   width: 100%;
-  overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: -ms-autohiding-scrollbar;
 }
@@ -13051,7 +13050,7 @@ button.bg-darker:focus {
 }
 
 .text-primary {
-  color: #5e72e4 !important;
+  color: var(--primary) !important;
 }
 
 a.text-primary:hover,
@@ -13764,7 +13763,7 @@ button.section-darker:focus {
 }
 
 .bg-gradient-primary {
-  background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%) !important;
+  background: linear-gradient(87deg, #000 0, var(--primary) 100%) !important;
 }
 
 .bg-gradient-secondary {
@@ -14612,7 +14611,7 @@ a.text-pink:focus {
 }
 
 .text-red {
-  color: #f5365c !important;
+  color: var(--red) !important;
 }
 
 a.text-red:hover,
@@ -16106,6 +16105,7 @@ textarea[resize="horizontal"] {
 
 .header {
   position: relative;
+  height: 10vh !important; 
 }
 
 .icon {
@@ -20683,3 +20683,13 @@ pre>code.highlight {
 }
 
 /*# sourceMappingURL=dashboard-free.css.map */
+
+.content {
+  margin-top: 20px;
+  height: 90vh;
+}
+
+.main-bg {
+  background: #eefaff;
+
+}

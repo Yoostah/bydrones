@@ -1,0 +1,21 @@
+/* HSL */
+$color1: hsla(197%, 95%, 15%, 1);
+$color2: hsla(0%, 94%, 28%, 1);
+$color3: hsla(44%, 98%, 47%, 1);
+$color4: hsla(0%, 0%, 0%, 1);
+$color5: hsla(44%, 85%, 95%, 1);
+
+/* RGB */
+$color1: rgba(2, 55, 76, 1);
+$color2: rgba(138, 4, 4, 1);
+$color3: rgba(237, 175, 3, 1);
+$color4: rgba(0, 0, 0, 1);
+$color5: rgba(253, 247, 231, 1);
+
+/* HEX */
+
+$color1: #02374c;
+$color2: #8a0404;
+$color3: #edaf03;
+$color4: #000000;
+$color5: #fdf7e7;
