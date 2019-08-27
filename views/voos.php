@@ -26,7 +26,7 @@
                     <img alt="Image placeholder" src=" <?php echo BASE_URL; ?>assets/img/brand/drone.svg">
                   </a>
                   <div class="media-body">
-                    <span class="mb-0 text-sm">Fulano de Tal</span>
+                    <span class="mb-0 text-sm">Pedro Henrique</span>
                   </div>
                 </div>
               </th>
@@ -56,7 +56,7 @@
                   <span class="mr-2">50%</span>
                   <div>
                     <div class="progress">
-                      <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="50" aria-valuemin="0"
+                      <div class="progress-bar bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0"
                         aria-valuemax="100" style="width: 50%;"></div>
                     </div>
                   </div>
@@ -85,7 +85,7 @@
                     <img alt="Image placeholder" src=" <?php echo BASE_URL; ?>assets/img/brand/drone.svg">
                   </a>
                   <div class="media-body">
-                    <span class="mb-0 text-sm">Fulano de Tal</span>
+                    <span class="mb-0 text-sm">Bonieky Lacerda</span>
                   </div>
                 </div>
               </th>
@@ -115,7 +115,7 @@
                   <span class="mr-2">75%</span>
                   <div>
                     <div class="progress">
-                      <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="75" aria-valuemin="0"
+                      <div class="progress-bar bg-success" role="progressbar" aria-valuenow="75" aria-valuemin="0"
                         aria-valuemax="100" style="width: 75%;"></div>
                     </div>
                   </div>
@@ -144,7 +144,7 @@
                     <img alt="Image placeholder" src=" <?php echo BASE_URL; ?>assets/img/brand/drone.svg">
                   </a>
                   <div class="media-body">
-                    <span class="mb-0 text-sm">Fulano de Tal</span>
+                    <span class="mb-0 text-sm">Diego Fernandes</span>
                   </div>
                 </div>
               </th>
@@ -174,7 +174,7 @@
                   <span class="mr-2">100%</span>
                   <div>
                     <div class="progress">
-                      <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="100" aria-valuemin="0"
+                      <div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0"
                         aria-valuemax="100" style="width: 100%;"></div>
                     </div>
                   </div>
@@ -203,7 +203,7 @@
                     <img alt="Image placeholder" src=" <?php echo BASE_URL; ?>assets/img/brand/drone.svg">
                   </a>
                   <div class="media-body">
-                    <span class="mb-0 text-sm">Fulano de Tal</span>
+                    <span class="mb-0 text-sm">Murilo Horta</span>
                   </div>
                 </div>
               </th>
@@ -233,7 +233,7 @@
                   <span class="mr-2">100%</span>
                   <div>
                     <div class="progress">
-                      <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="100" aria-valuemin="0"
+                      <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0"
                         aria-valuemax="100" style="width: 100%;"></div>
                     </div>
                   </div>

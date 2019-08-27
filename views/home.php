@@ -1,20 +1,11 @@
 <!-- Cards -->
 <div class="container-fluid">
   <div class="col">
-    <div class="header-body">
-      <div class="card-header border-0">
+    <div class="header-body ">
+      <div class="card-header border-0 shadow">
         <h3 class="mb-0">Indicadores</h3>
       </div>
-      <div class="table-responsive">
-        <table class="table align-items-center table-flush">
-          <thead class="thead-light">
-            <tr>
-              <th scope="col" colspan="100">&nbsp;</th>
-            </tr>
-          </thead>
-        </table>
-      </div>
-      <div class="row">
+      <div class="row dashboard-cards">
         <div class="col-xl-3 col-lg-6">
           <div class="card card-stats mb-4 mb-xl-0">
             <div class="card-body">

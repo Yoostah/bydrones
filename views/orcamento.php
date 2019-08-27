@@ -24,7 +24,7 @@
                     <img alt="Image placeholder" src=" <?php echo BASE_URL; ?>assets/img/brand/drone.svg">
                   </a>
                   <div class="media-body">
-                    <span class="mb-0 text-sm">Fulano de Tal</span>
+                    <span class="mb-0 text-sm">João César</span>
                   </div>
                 </div>
               </th>
@@ -33,7 +33,7 @@
               </td>
               <td>
                 <span class="badge badge-dot mr-4">
-                  <i class="bg-danger"></i> Pendente
+                  <i class="bg-warning"></i> Pendente
                 </span>
               </td>
               <td>
@@ -49,7 +49,7 @@
                   <span class="mr-2">10%</span>
                   <div>
                     <div class="progress">
-                      <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="10" aria-valuemin="0"
+                      <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="10" aria-valuemin="0"
                         aria-valuemax="100" style="width: 10%;"></div>
                     </div>
                   </div>
@@ -78,7 +78,7 @@
                     <img alt="Image placeholder" src=" <?php echo BASE_URL; ?>assets/img/brand/drone.svg">
                   </a>
                   <div class="media-body">
-                    <span class="mb-0 text-sm">Fulano de Tal</span>
+                    <span class="mb-0 text-sm">Pedro Henrique</span>
                   </div>
                 </div>
               </th>
@@ -132,7 +132,7 @@
                     <img alt="Image placeholder" src=" <?php echo BASE_URL; ?>assets/img/brand/drone.svg">
                   </a>
                   <div class="media-body">
-                    <span class="mb-0 text-sm">Fulano de Tal</span>
+                    <span class="mb-0 text-sm">José da Silva</span>
                   </div>
                 </div>
               </th>
@@ -186,7 +186,7 @@
                     <img alt="Image placeholder" src=" <?php echo BASE_URL; ?>assets/img/brand/drone.svg">
                   </a>
                   <div class="media-body">
-                    <span class="mb-0 text-sm">Fulano de Tal</span>
+                    <span class="mb-0 text-sm">Fabio Pereira</span>
                   </div>
                 </div>
               </th>

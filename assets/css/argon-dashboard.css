@@ -5278,8 +5278,8 @@ input[type="button"].btn-block {
 .page-item.active .page-link {
   z-index: 1;
   color: #fff;
-  background-color: #5e72e4;
-  border-color: #5e72e4;
+  background-color: var(--primary);
+  border-color: var(--primary);
 }
 
 .page-item.disabled .page-link {
@@ -6863,14 +6863,14 @@ button.bg-info:focus {
 }
 
 .bg-warning {
-  background-color: #fb6340 !important;
+  background-color: #fbc940 !important;
 }
 
 a.bg-warning:hover,
 a.bg-warning:focus,
 button.bg-warning:hover,
 button.bg-warning:focus {
-  background-color: #fa3a0e !important;
+  background-color: #ffa600 !important;
 }
 
 .bg-danger {
@@ -20692,4 +20692,8 @@ pre>code.highlight {
 .main-bg {
   background: #eefaff;
 
+}
+
+.dashboard-cards{
+  margin-top: 40px;
 }

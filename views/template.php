@@ -28,12 +28,12 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <!-- Brand -->
-      <a class="navbar-brand pt-0" href="./index.html">
+      <a class="navbar-brand pt-0" href="<?php echo BASE_URL; ?>">
         <img src="<?php echo BASE_URL; ?>assets/img/brand/logo_only2.svg" class="navbar-brand-img" alt="...">
       </a>
       <!-- User -->
       <ul class="nav align-items-center d-md-none">
-        <li class="nav-item dropdown">
+        <!-- <li class="nav-item dropdown">
           <a class="nav-link nav-link-icon" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
             <i class="ni ni-bell-55"></i>
@@ -45,40 +45,35 @@
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">Something else here</a>
           </div>
-        </li>
+        </li> -->
         <li class="nav-item dropdown">
           <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div class="media align-items-center">
               <span class="avatar avatar-sm rounded-circle">
-                <img alt="Image placeholder" src="<?php echo BASE_URL; ?>assets/img/theme/team-1-800x800.jpg
-">
+                <img alt="Image placeholder" src="<?php echo BASE_URL; ?>assets/img/theme/team-1-800x800.jpg">
               </span>
             </div>
           </a>
           <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
             <div class=" dropdown-header noti-title">
-              <h6 class="text-overflow m-0">Welcome!</h6>
+              <h6 class="text-overflow m-0">Bem Vindo!</h6>
             </div>
-            <a href="./examples/profile.html" class="dropdown-item">
+            <a href="<?php echo BASE_URL; ?>profile" class="dropdown-item">
               <i class="ni ni-single-02"></i>
-              <span>My profile</span>
+              <span>Meu Perfil</span>
             </a>
-            <a href="./examples/profile.html" class="dropdown-item">
+            <a href="<?php echo BASE_URL; ?>options" class="dropdown-item">
               <i class="ni ni-settings-gear-65"></i>
-              <span>Settings</span>
+              <span>Configurações</span>
             </a>
-            <a href="./examples/profile.html" class="dropdown-item">
+            <a href="<?php echo BASE_URL; ?>activities" class="dropdown-item">
               <i class="ni ni-calendar-grid-58"></i>
-              <span>Activity</span>
-            </a>
-            <a href="./examples/profile.html" class="dropdown-item">
-              <i class="ni ni-support-16"></i>
-              <span>Support</span>
+              <span>Minhas Atividades</span>
             </a>
             <div class="dropdown-divider"></div>
-            <a href="#!" class="dropdown-item">
+            <a href="<?php echo BASE_URL; ?>logout" class="dropdown-item">
               <i class="ni ni-user-run"></i>
-              <span>Logout</span>
+              <span>Sair</span>
             </a>
           </div>
         </li>
@@ -138,13 +133,12 @@
         <!-- Navigation -->
         <ul class="navbar-nav mb-md-3">
           <li class="nav-item">
-            <a class="nav-link"
-              href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html">
+            <a class="nav-link" href="<?php echo BASE_URL; ?>administration">
               <i class="ni ni-settings-gear-65 text-red"></i> Configurações
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/foundation/colors.html">
+            <a class="nav-link" href="<?php echo BASE_URL; ?>options">
               <i class="ni ni-ui-04 text-red"></i> Ajustes Rápidos
             </a>
           </li>
@@ -185,28 +179,24 @@
             </a>
             <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
               <div class=" dropdown-header noti-title">
-                <h6 class="text-overflow m-0">Welcome!</h6>
+                <h6 class="text-overflow m-0">Bem Vindo!</h6>
               </div>
-              <a href="./examples/profile.html" class="dropdown-item">
+              <a href="<?php echo BASE_URL; ?>profile" class="dropdown-item">
                 <i class="ni ni-single-02"></i>
-                <span>My profile</span>
+                <span>Meu Perfil</span>
               </a>
-              <a href="./examples/profile.html" class="dropdown-item">
+              <a href="<?php echo BASE_URL; ?>options" class="dropdown-item">
                 <i class="ni ni-settings-gear-65"></i>
-                <span>Settings</span>
+                <span>Configurações</span>
               </a>
-              <a href="./examples/profile.html" class="dropdown-item">
+              <a href="<?php echo BASE_URL; ?>activities" class="dropdown-item">
                 <i class="ni ni-calendar-grid-58"></i>
-                <span>Activity</span>
-              </a>
-              <a href="./examples/profile.html" class="dropdown-item">
-                <i class="ni ni-support-16"></i>
-                <span>Support</span>
+                <span>Minhas Atividades</span>
               </a>
               <div class="dropdown-divider"></div>
-              <a href="#!" class="dropdown-item">
+              <a href="<?php echo BASE_URL; ?>logout" class="dropdown-item">
                 <i class="ni ni-user-run"></i>
-                <span>Logout</span>
+                <span>Sair</span>
               </a>
             </div>
           </li>
@@ -258,14 +248,7 @@
   <script src="<?php echo BASE_URL; ?>assets/js/plugins/chart.js/dist/Chart.extension.js"></script>
   <!--   Argon JS   -->
   <script src="<?php echo BASE_URL; ?>assets/js/argon-dashboard.min.js?v=1.1.0"></script>
-  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
-  <script>
-  window.TrackJS &&
-    TrackJS.install({
-      token: "ee6fab19c5a04ac1a32a645abde4613a",
-      application: "argon-dashboard-free"
-    });
-  </script>
+
 </body>
 
 </html>
