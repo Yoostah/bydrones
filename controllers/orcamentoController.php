@@ -13,6 +13,12 @@ class orcamentoController extends controller
 		$this->loadTemplate('orcamento', $dados);
 	}
 
+	public function showItems($budget_id){
+		$orcamento = new Orcamento();
+
+		return $orcamento->showItems($budget_id);
+	}
+	
 	public function checkProgress($status){
 		$status_config = array();
 		switch ($status) {

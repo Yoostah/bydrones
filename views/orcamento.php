@@ -23,6 +23,7 @@
             echo '<tr><td class="no_result" colspan="100">Nenhum Orçamento cadastrado.</td></tr>';
           }else{
             foreach ($orcamentos as $orcamento) {
+              //print_r($orcamento);
               $status = $this->checkProgress($orcamento['status_id']);
             ?>
             <tr>
@@ -37,7 +38,7 @@
                 </div>
               </th>
               <td>
-                R$2,500
+                <strong>R$ <?php echo $orcamento['valor_total'] ?></strong>
               </td>
               <td>
                 <strong><?php echo $orcamento['createdAt'] ?></strong>
@@ -83,12 +84,44 @@
                 </div>
               </td>
             </tr>
-            <?php
-            }
-          }
-          ?>
-
           </tbody>
+          <div>
+            <thead class="thead-light">
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Item</th>
+                <th scope="col">Valor Unitário</th>
+                <th scope="col">Quantidade</th>
+                <th scope="col">Total Serviço</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php 
+                foreach ($this->showItems($orcamento['id']) as $item => $valor) {
+              ?>              
+                <tr>
+                  <td></td>
+                  <td><?php echo $valor['name']; ?></td>
+                  <td><?php echo $valor['unitario']; ?></td>
+                  <td><?php echo $valor['weight_quantity']; ?></td>
+                  <td><?php echo $valor['weight_total_value']; ?></td>
+                </tr>
+              <?php
+                }
+                
+                ?>
+              <tr>
+                  <td colspan="3"></td>
+                  <td>Valor Total:</td>
+                  <td><?php echo $orcamento['valor_total']; ?></td>
+              <tr>    
+            </tbody>
+          </div>  
+          <?php
+          }
+        }
+        ?>
+
         </table>
       </div>
       <div class="card-footer py-4">
