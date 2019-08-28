@@ -1,5 +1,3 @@
-<!-- <link href="http://getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css" rel="stylesheet"> -->
-
 <div class="container-fluid">
   <div class="col">
     <div class="card shadow">
@@ -126,68 +124,159 @@
 
         </table>
       </div> -->
+
+
       <div class="table-responsive">
-        <table class="table">
-          <thead>
+
+        <table class="table align-items-center">
+          <thead class="thead-light">
             <tr>
-              <th>#</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Username</th>
+              <th scope="col">Cliente</th>
+              <th scope="col">Valor</th>
+              <th scope="col">Data</th>
+              <th scope="col">Status</th>
+              <th scope="col">Responsável</th>
+              <th scope="col">Progresso</th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
+            <?php
+            if (count($orcamentos) == 0) {
+              echo '<tr><td class="no_result" colspan="100">Nenhum Orçamento cadastrado.</td></tr>';
+            } else {
+              foreach ($orcamentos as $orcamento) {
+                //print_r($orcamento);
+                $status = $this->checkProgress($orcamento['status_id']);
+                ?>
             <tr class="accordion-toggle" data-toggle="collapse" data-target="#collapseOne">
-              <td>1</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <td></td>
-              <td colspan="3">
-                <div id="collapseOne" class="collapse in">
-                  - Details 1 <br /> - Details 2 <br /> - Details 3 <br />
+              <th scope="row">
+                <div class="media align-items-center">
+                  <a href="#" class="avatar rounded-circle mr-3">
+                    <img alt="Image placeholder" src="<?php echo BASE_URL; ?>assets/img/brand/drone.svg">
+                  </a>
+                  <div class="media-body">
+                    <span class="mb-0 text-sm"><?php echo $orcamento['customer'] ?></span>
+                  </div>
+                </div>
+              </th>
+              <td>
+                <strong>R$ <?php echo $orcamento['valor_total'] ?></strong>
+              </td>
+              <td>
+                <strong><?php echo $orcamento['createdAt'] ?></strong>
+              </td>
+              <td>
+                <span class="badge badge-dot mr-4">
+                  <i class="<?php echo $status['classe'] ?>"></i><?php echo $orcamento['status'] ?>
+                </span>
+              </td>
+              <td>
+                <div class="avatar-group">
+                  <a href="#" class="avatar avatar-sm" data-toggle="tooltip" data-original-title="Jessica Doe">
+                    <img alt="Image placeholder" src=" <?php echo BASE_URL; ?>assets/img/theme/team-4-800x800.jpg"
+                      class="rounded-circle">
+                  </a>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <span class="mr-2"><?php echo $status['percent'] ?>%</span>
+                  <div>
+                    <div class="progress">
+                      <div class="progress-bar <?php echo $status['classe'] ?>" role="progressbar"
+                        aria-valuenow="<?php echo $status['percent'] ?>" aria-valuemin="0" aria-valuemax="100"
+                        style="width: <?php echo $status['percent'] ?>%;"></div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td class="text-right">
+                <div class="dropdown">
+                  <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-ellipsis-v"></i>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                    <a class="dropdown-item" href="#">Enviar por E-mail</a>
+                    <hr class="my-3">
+                    <a class="dropdown-item" href="#">Editar</a>
+                    <a class="dropdown-item" href="#">Aprovar</a>
+                    <a class="dropdown-item" href="#">Reprovar</a>
+                  </div>
                 </div>
               </td>
             </tr>
-            <tr>
-              <td>2</td>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
+            <tr id="collapseOne" class="collapse in">
+              <td colspan="100">
+                <table class="align-items-center table-flush budget_detail">
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col">Item</th>
+                      <th scope="col">Valor Unitário</th>
+                      <th scope="col">Quantidade</th>
+                      <th scope="col">Total Serviço</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <?php
+                              foreach ($this->showItems($orcamento['id']) as $item => $valor) { ?>
+
+                      <td><?php echo $valor['name']; ?></td>
+                      <td><strong>R$ <?php echo $valor['unitario']; ?></strong></td>
+                      <td><?php echo floatval($valor['weight_quantity']); ?></td>
+                      <td><strong>R$ <?php echo $valor['weight_total_value']; ?></strong></td>
+                    </tr>
+                    <?php
+                          }
+                          ?>
+                    <tr class="budget_total">
+                      <td colspan="2"></td>
+                      <td>Valor Total:</td>
+                      <td><strong>R$ <?php echo $orcamento['valor_total']; ?></strong></td>
+                    </tr>
+                    <?php
+                      } ?>
+                  </tbody>
+                </table>
+
+              </td>
             </tr>
+            <!-- <tr id="collapseOne" class="collapse in">
+              
+            </tr> -->
           </tbody>
+          <?php
+        }
+        ?>
         </table>
       </div>
-
-    </div>
-    <div class="card-footer py-4">
-      <nav aria-label="...">
-        <ul class="pagination justify-content-end mb-0">
-          <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1">
-              <i class="fas fa-angle-left"></i>
-              <span class="sr-only">Previous</span>
-            </a>
-          </li>
-          <li class="page-item active">
-            <a class="page-link" href="#">1</a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#">
-              <i class="fas fa-angle-right"></i>
-              <span class="sr-only">Next</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
+      <div class="card-footer py-4">
+        <nav aria-label="...">
+          <ul class="pagination justify-content-end mb-0">
+            <li class="page-item disabled">
+              <a class="page-link" href="#" tabindex="-1">
+                <i class="fas fa-angle-left"></i>
+                <span class="sr-only">Previous</span>
+              </a>
+            </li>
+            <li class="page-item active">
+              <a class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#">
+                <i class="fas fa-angle-right"></i>
+                <span class="sr-only">Next</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </div>
   </div>
 </div>
-</div>
-<!-- <script src="<?php echo BASE_URL; ?>assets/js/plugins/bootstrap/dist/js/bootstrap.min.js"></script> -->
