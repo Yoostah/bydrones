@@ -1,10 +1,12 @@
+<!-- <link href="http://getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css" rel="stylesheet"> -->
+
 <div class="container-fluid">
   <div class="col">
     <div class="card shadow">
       <div class="card-header border-0">
         <h3 class="mb-0">Orçamentos</h3>
       </div>
-      <div class="table-responsive">
+      <!-- <div class="table-responsive">
         <table class="table align-items-center table-flush">
           <thead class="thead-light">
             <tr>
@@ -18,14 +20,14 @@
             </tr>
           </thead>
           <tbody>
-            <?php 
-          if(count($orcamentos) == 0){
-            echo '<tr><td class="no_result" colspan="100">Nenhum Orçamento cadastrado.</td></tr>';
-          }else{
-            foreach ($orcamentos as $orcamento) {
-              //print_r($orcamento);
-              $status = $this->checkProgress($orcamento['status_id']);
-            ?>
+            <?php
+            if (count($orcamentos) == 0) {
+              echo '<tr><td class="no_result" colspan="100">Nenhum Orçamento cadastrado.</td></tr>';
+            } else {
+              foreach ($orcamentos as $orcamento) {
+                //print_r($orcamento);
+                $status = $this->checkProgress($orcamento['status_id']);
+                ?>
             <tr>
               <th scope="row">
                 <div class="media align-items-center">
@@ -96,59 +98,96 @@
               </tr>
             </thead>
             <tbody>
-              <?php 
-                foreach ($this->showItems($orcamento['id']) as $item => $valor) {
-              ?>              
-                <tr>
-                  <td></td>
-                  <td><?php echo $valor['name']; ?></td>
-                  <td><?php echo $valor['unitario']; ?></td>
-                  <td><?php echo $valor['weight_quantity']; ?></td>
-                  <td><?php echo $valor['weight_total_value']; ?></td>
-                </tr>
               <?php
-                }
-                
-                ?>
+                  foreach ($this->showItems($orcamento['id']) as $item => $valor) {
+                    ?>
               <tr>
-                  <td colspan="3"></td>
-                  <td>Valor Total:</td>
-                  <td><?php echo $orcamento['valor_total']; ?></td>
-              <tr>    
+                <td></td>
+                <td><?php echo $valor['name']; ?></td>
+                <td><?php echo $valor['unitario']; ?></td>
+                <td><?php echo $valor['weight_quantity']; ?></td>
+                <td><?php echo $valor['weight_total_value']; ?></td>
+              </tr>
+              <?php
+                  }
+
+                  ?>
+              <tr>
+                <td colspan="3"></td>
+                <td>Valor Total:</td>
+                <td><?php echo $orcamento['valor_total']; ?></td>
+              <tr>
             </tbody>
-          </div>  
+          </div>
           <?php
+            }
           }
-        }
-        ?>
+          ?>
 
         </table>
+      </div> -->
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Username</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="accordion-toggle" data-toggle="collapse" data-target="#collapseOne">
+              <td>1</td>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td colspan="3">
+                <div id="collapseOne" class="collapse in">
+                  - Details 1 <br /> - Details 2 <br /> - Details 3 <br />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <div class="card-footer py-4">
-        <nav aria-label="...">
-          <ul class="pagination justify-content-end mb-0">
-            <li class="page-item disabled">
-              <a class="page-link" href="#" tabindex="-1">
-                <i class="fas fa-angle-left"></i>
-                <span class="sr-only">Previous</span>
-              </a>
-            </li>
-            <li class="page-item active">
-              <a class="page-link" href="#">1</a>
-            </li>
-            <li class="page-item">
-              <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#">
-                <i class="fas fa-angle-right"></i>
-                <span class="sr-only">Next</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
+
+    </div>
+    <div class="card-footer py-4">
+      <nav aria-label="...">
+        <ul class="pagination justify-content-end mb-0">
+          <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">
+              <i class="fas fa-angle-left"></i>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+          <li class="page-item active">
+            <a class="page-link" href="#">1</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#">
+              <i class="fas fa-angle-right"></i>
+              <span class="sr-only">Next</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
 </div>
+</div>
+<!-- <script src="<?php echo BASE_URL; ?>assets/js/plugins/bootstrap/dist/js/bootstrap.min.js"></script> -->
