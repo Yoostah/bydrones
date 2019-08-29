@@ -13,6 +13,13 @@ class orcamentoController extends controller
 		$this->loadTemplate('orcamento', $dados);
 	}
 
+	public function enviar()
+	{
+		$email = new Mail();
+		$ret = $email->sendMail();
+		echo $ret;
+	}
+
 	public function store()
 	{
 		if (isset($_POST['nome']) && !empty($_POST['nome'])) {
