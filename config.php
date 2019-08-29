@@ -14,6 +14,7 @@ if(ENVIRONMENT == 'development') {
 	$config['host'] = 'localhost';
 	$config['dbuser'] = 'root';
 	$config['dbpass'] = 'root';
+}
 
 global $db;
 try {
