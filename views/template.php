@@ -17,6 +17,8 @@
     rel="stylesheet" />
   <!-- CSS Files -->
   <link href="<?php echo BASE_URL; ?>assets/css/argon-dashboard.css?v=1.1.0" rel="stylesheet" />
+  <!-- JQUERY -->
+  <script src="<?php echo BASE_URL; ?>assets/js/plugins/jquery/dist/jquery.min.js"></script>
 </head>
 
 <body class="">
@@ -253,7 +255,6 @@
       </footer> -->
   </div>
   <!--   Core   -->
-  <script src="<?php echo BASE_URL; ?>assets/js/plugins/jquery/dist/jquery.min.js"></script>
   <script src="<?php echo BASE_URL; ?>assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <!--   Optional JS   -->
   <script src="<?php echo BASE_URL; ?>assets/js/plugins/chart.js/dist/Chart.min.js"></script>

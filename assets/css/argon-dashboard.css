@@ -20721,3 +20721,31 @@ pre>code.highlight {
   display: flex;
   justify-content: space-between;
 }
+
+form.cadastro{
+  font-size: 14px;
+}
+
+form.cadastro .form-control {
+  font-size: 12px;
+}
+
+form.cadastro .form-group {
+  margin-bottom: .5rem;
+}
+
+form.cadastro .hidden {
+  display:none;
+}
+
+form.cadastro .modal-body {
+  padding-bottom: 0;
+}
+
+.modal-footer{
+  padding-top: 0;
+}
+
+.modal-body{
+  padding-bottom: 10px;
+}

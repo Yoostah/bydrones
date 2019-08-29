@@ -1,38 +1,55 @@
 <!-- Modal -->
-<div class="modal fade" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalCadastro" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Preencha dos dados do Orçamento</h5>
+        <h2 class="modal-title" id="modalTitle">Preencha dos dados do Orçamento</h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <!-- ... -->
-        <form>
+        <form class="cadastro" method="POST" action="<?php echo BASE_URL; ?>orcamento/store">
           <div class="row">
             <div class="col-md-12">
               <label for="email">Nome</label>
               <div class="form-group">
-                <input type="email" class="form-control" id="nome" placeholder="Nome Cliente">
+                <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome Cliente" required>
               </div>
-            </div>  
-          </div>          
+            </div>
+          </div>
           <div class="row">
             <div class="col-md-12">
               <label for="email">E-mail</label>
               <div class="form-group">
-                <input type="email" class="form-control" id="email" placeholder="E-mail Cliente">
+                <input type="email" class="form-control" id="email" name="email" placeholder="E-mail Cliente">
               </div>
-            </div>  
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label for="">Deslocamento?</label>
+              <div class="form-group">
+                <label class="custom-toggle">
+                  <input type="checkbox" id="check_deslocamento">
+                  <span class="custom-toggle-slider rounded-circle"></span>
+                </label>
+              </div>
+            </div>
+            <div id="qtd_deslocamento" class="col-md-6 hidden">
+              <label for="deslocamento">Distância</label>
+              <div class="form-group">
+                <input type="number" class="form-control" id="deslocamento" name="deslocamento" placeholder="KM">
+              </div>
+            </div>
           </div>
           <div class="row">
             <div class="col-md-8">
               <label for="email">Tipo de Área</label>
               <div class="form-group">
-                <select name="tipo_area" class="form-control" id="tipo_area">
-                  <option value="-1">Selecione um opção</option>
+                <select name="tipo_area" class="form-control" id="tipo_area" required>
+                  <option value="">Selecione um opção</option>
                   <option value="1">Abaixo de 50ha</option>
                   <option value="2">Acima de 50ha</option>
                   <option value="3">Abaixo de 50ha com fio</option>
@@ -47,62 +64,105 @@
             <div class="col-md-4">
               <label for="email">Hectares</label>
               <div class="form-group">
-                <input type="number" class="form-control" id="hectares" placeholder="Hectares">
+                <input type="number" class="form-control" id="hectares" name="tamanho_area" placeholder="Hectares"
+                  required>
               </div>
-            </div>  
-          </div> 
+            </div>
+          </div>
           <div class="row">
             <div class="col-md-6">
               <label for="">Hospedagem?</label>
               <div class="form-group">
                 <label class="custom-toggle">
-                  <input type="checkbox">
+                  <input type="checkbox" id="check_hospedagem">
                   <span class="custom-toggle-slider rounded-circle"></span>
                 </label>
-              </div>  
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <input type="number" class="form-control" id="metragem" placeholder="Quantidade">
               </div>
-            </div>          
+            </div>
+            <div id="qtd_hospedagem" class="col-md-6 hidden">
+              <label for="">Quantidade</label>
+              <div class="form-group">
+                <input type="number" class="form-control" id="hospedagem" name="hospedagem" placeholder="Dias">
+              </div>
+            </div>
           </div>
           <div class="row">
             <div class="col-md-6">
               <label for="">Alimentação?</label>
               <div class="form-group">
                 <label class="custom-toggle">
-                  <input type="checkbox">
+                  <input type="checkbox" id="check_alimentacao">
                   <span class="custom-toggle-slider rounded-circle"></span>
                 </label>
-              </div>  
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <input type="number" class="form-control" id="metragem" placeholder="Quantidade">
               </div>
-            </div>          
+            </div>
+            <div id="qtd_alimentacao" class="col-md-6 hidden">
+              <label for="">Quantidade</label>
+              <div class="form-group">
+                <input type="number" class="form-control" id="alimentacao" name="alimentacao" placeholder="Dias">
+              </div>
+            </div>
+          </div>
+          <div class="row modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
           </div>
         </form>
         <!-- ... -->
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-        <button type="button" class="btn btn-primary">Salvar mudanças</button>
-      </div>
+
     </div>
   </div>
 </div>
+<script>
+$(document).ready(function() {
+  $('#check_hospedagem').click(function() {
+    var check = document.getElementById("check_hospedagem");
+    if (check.checked) {
+      $('#qtd_hospedagem').show();
+      $('#hospedagem').prop("required", true);
+    } else {
+      $('#qtd_hospedagem').hide();
+      $('#hospedagem').prop("required", false);
+    }
+
+  });
+
+  $('#check_alimentacao').click(function() {
+    var check = document.getElementById("check_alimentacao");
+    if (check.checked) {
+      $('#qtd_alimentacao').show();
+      $('#alimentacao').prop("required", true);
+    } else {
+      $('#qtd_alimentacao').hide();
+      $('#alimentacao').prop("required", false);
+    }
+
+  });
+
+  $('#check_deslocamento').click(function() {
+    var check = document.getElementById("check_deslocamento");
+    if (check.checked) {
+      $('#qtd_deslocamento').show();
+      $('#deslocamento').prop("required", true);
+    } else {
+      $('#qtd_deslocamento').hide();
+      $('#deslocamento').prop("required", false);
+    }
+
+  });
+});
+</script>
 <div class="container-fluid">
   <div class="col">
     <div class="card shadow">
       <div class="card-header border-0 label_page">
         <h3 class="mb-0">Orçamentos</h3>
         <!-- Botão para acionar modal -->
-        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalExemplo">
+        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalCadastro">
           Novo Orçamento
         </button>
-      </div>      
+      </div>
       <div class="table-responsive">
 
         <table class="table align-items-center">
@@ -123,10 +183,10 @@
               echo '<tr><td class="no_result" colspan="100">Nenhum Orçamento cadastrado.</td></tr>';
             } else {
               foreach ($orcamentos as $orcamento) {
-                //print_r($orcamento);
+                //print_r($orcamentos);
                 $status = $this->checkProgress($orcamento['status_id']);
                 ?>
-            <tr class="accordion-toggle" data-toggle="collapse" data-target="#collapseOne">
+            <tr class="" data-toggle="collapse" data-target="#items_<?php echo $orcamento['id'] ?>">
               <th scope="row">
                 <div class="media align-items-center">
                   <a href="#" class="avatar rounded-circle mr-3">
@@ -178,13 +238,15 @@
                     <a class="dropdown-item" href="#">Enviar por E-mail</a>
                     <hr class="my-3">
                     <a class="dropdown-item" href="#">Editar</a>
-                    <a class="dropdown-item" href="#">Aprovar</a>
-                    <a class="dropdown-item" href="#">Reprovar</a>
+                    <a class="dropdown-item"
+                      href="<?php echo BASE_URL . 'orcamento/aprovarOrcamento/' . $orcamento['id'] ?>">Aprovar</a>
+                    <a class="dropdown-item"
+                      href="<?php echo BASE_URL . 'orcamento/reprovarOrcamento/' . $orcamento['id'] ?>">Reprovar</a>
                   </div>
                 </div>
               </td>
             </tr>
-            <tr id="collapseOne" class="collapse in">
+            <tr id="items_<?php echo $orcamento['id'] ?>" class="collapse in">
               <td colspan="100">
                 <table class="align-items-center table-flush budget_detail">
                   <thead class="thead-light">
@@ -213,16 +275,12 @@
                       <td>Valor Total:</td>
                       <td><strong>R$ <?php echo $orcamento['valor_total']; ?></strong></td>
                     </tr>
-                    <?php
-                      } ?>
                   </tbody>
                 </table>
-
               </td>
             </tr>
-            <!-- <tr id="collapseOne" class="collapse in">
-              
-            </tr> -->
+            <?php
+                } ?>
           </tbody>
           <?php
         }
