@@ -20716,3 +20716,8 @@ pre>code.highlight {
   color: #fff;
   font-weight: bold;
 }
+
+.label_page {
+  display: flex;
+  justify-content: space-between;
+}
