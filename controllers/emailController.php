@@ -9,14 +9,11 @@ require dirname(dirname(__FILE__)) . '/mail/SMTP.php';
 
 class emailController extends controller
 {
-  public function index()
-  {
-    echo !extension_loaded('openssl') ? "Not Available" : "Available";
-    exit;
-  }
-  public function sendMail()
+  
+  public function sendMail($titulo, $destinatario, $data='')
   {
     $mail = new PHPMailer;
+    $mail->CharSet = 'UTF-8';
     //Tell PHPMailer to use SMTP
     $mail->isSMTP();
     //Enable SMTP debugging
@@ -24,63 +21,66 @@ class emailController extends controller
     // 1 = client messages
     // 2 = client and server messages
     $mail->SMTPDebug = 0;
-    //Set the hostname of the mail server
+
     $mail->Host = "tls://smtp.gmail.com:587";
-    // use
-    // $mail->Host = gethostbyname('smtp.gmail.com');
-    // if your network does not support SMTP over IPv6
-    //Set the SMTP port number - 587 for authenticated TLS, a.k.a. RFC4409 SMTP submission
-    //$mail->Port = 587;
-    //Set the encryption system to use - ssl (deprecated) or tls
-    //$mail->SMTPSecure = 'tls';
-    //Whether to use SMTP authentication
     $mail->SMTPAuth = true;
-    //Username to use for SMTP authentication - use full email address for gmail
     $mail->Username = "dev04.grupopzm@gmail.com";
-    //Password to use for SMTP authentication
     $mail->Password = "Padrao@998";
-    //Set who the message is to be sent from
+
     $mail->setFrom('dev04.grupopzm@gmail.com', 'Thulio');
-    //Set an alternative reply-to address
     $mail->addReplyTo('no-reply@gmail.com', 'Reply');
-    //Set who the message is to be sent to
-    $mail->addAddress('dev04.grupopzm@gmail.com', 'Thulio User');
-    //Set the subject line
-    $mail->Subject = 'PHPMailer GMail SMTP test';
-    //Read an HTML message body from an external file, convert referenced images to embedded,
-    //convert HTML into a basic plain-text alternative body
-    //$mail->msgHTML(file_get_contents('contents.html'), __DIR__);
-    //Replace the plain text body with one created manually
-    //$mail->AltBody = 'This is a plain-text message body';
-    $mail->Body = 'Corpo da Mensagem';
-    $mail->IsHTML(false);
+    $mail->addAddress($destinatario);
+    $mail->Subject = $titulo;
+
+    //$path = dirname(dirname(__FILE__)) . '/views/email/orcamento.html';
+    //ob_start();
+    //include($path);
+    //$message = ob_get_clean();
+    $mail->msgHTML($data);
+    $mail->IsHTML(true);
+
+    //$mail->Body = 'Corpo da Mensagem';
     //Attach an image file
     //$mail->addAttachment('images/phpmailer_mini.png');
-    //send the message, check for errors
+
     if (!$mail->send()) {
-      echo "Mailer Error: " . $mail->ErrorInfo;
+      //echo "Mailer Error: " . $mail->ErrorInfo;
+      return true;
     } else {
-      echo "Message sent!";
-      //Section 2: IMAP
-      //Uncomment these to save your message in the 'Sent Mail' folder.
-      #if (save_mail($mail)) {
-      #    echo "Message saved!";
-      #}
+      //echo "Message sent!";
+      return false;      
+    }    
+  }
+
+  
+  public function orcamento($id,$destinatario)
+  {
+    $titulo = ':: BYDRONES | Seu Orçamento de Pulverização ::'; 
+    
+    $orcamento = new Orcamento();
+    $dados = $orcamento->showItems($id);
+
+    $email = new MailOrcamento();
+    
+    $linhas_de_servico = '';
+    $troca_cor = 1;
+    foreach ($dados as $key => $value) {
+      if($troca_cor){
+        $linhas_de_servico .=$email->montaOrcamentoLinhaBranca($value['cat_image'].'.png',$value['name'],$value['weight_quantity']+0,'R$
+        '.$value['weight_total_value']);
+        $troca_cor--;
+      }else{
+        $linhas_de_servico .=$email->montaOrcamentoLinhaCinza($value['cat_image'].'.png',$value['name'],$value['weight_quantity']+0,'R$
+        '.$value['weight_total_value']);
+        $troca_cor++;
+      }
     }
-    //Section 2: IMAP
-    //IMAP commands requires the PHP IMAP Extension, found at: https://php.net/manual/en/imap.setup.php
-    //Function to call which uses the PHP imap_*() functions to save messages: https://php.net/manual/en/book.imap.php
-    //You can use imap_getmailboxes($imapStream, '/imap/ssl', '*' ) to get a list of available folders or labels, this can
-    //be useful if you are trying to get this working on a non-Gmail IMAP server.
-    /*function save_mail($mail)
-    {
-      //You can change 'Sent Mail' to any other folder or tag
-      $path = "{imap.gmail.com:993/imap/ssl}[Gmail]/Sent Mail";
-      //Tell your server to open an IMAP connection using the same username and password as you used for SMTP
-      $imapStream = imap_open($path, $mail->Username, $mail->Password);
-      $result = imap_append($imapStream, $path, $mail->getSentMIMEMessage());
-      imap_close($imapStream);
-      return $result;
-    }*/
+
+    $linhas_de_servico.=$email->montaOrcamentoSomatorio('R$
+    '.$dados[0]['TOTAL']);
+    
+    include dirname(dirname(__FILE__)) . '/views/email/orcamento.php';
+    
+    $this->sendMail($titulo, $destinatario, orcamento($linhas_de_servico));
   }
 }
