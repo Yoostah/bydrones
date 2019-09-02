@@ -1,18 +1,18 @@
 <?php
-class Orcamento extends model
+class OrcamentoAprovado extends model
 {
 
 	public function index()
 	{
 		$array = array();
 		$sql = $this->db->query("
-		SELECT b.id, own.name as owner, b.customer_name as customer, b.customer_email as email, DATE_FORMAT(b.creation_date, '%d/%m/%Y %H:%i') as createdAt, b.limit_date, 
+		SELECT b.id, own.name as owner, b.customer_name as customer, b.customer_email as email, DATE_FORMAT(b.creation_date, '%d/%m/%Y %H:%i') as createdAt, DATE_FORMAT(b.scheduled_date, '%d/%m/%Y %H:%i') as data_agendamento, 
 		st.name as status, b.status as status_id,
 		(SELECT sum(weight_total_value) FROM v_final_budget WHERE budget_id = b.id) as valor_total  
 		FROM budget b 
 		JOIN users own ON b.owner_id = own.id
 		JOIN status st ON b.status = st.id
-		WHERE b.status IN (3,5,6,7) 
+		WHERE b.status IN (4,8,9)
 		ORDER BY createdAt");
 		if ($sql->rowCount() > 0) {
 			$array = $sql->fetchAll();
@@ -20,7 +20,27 @@ class Orcamento extends model
 		return $array;
 	}
 
-	public function store($data)
+	public function findOne($id){
+		$array = array();
+		$sql = $this->db->prepare("
+		SELECT b.id, own.name as owner, b.customer_name as customer, b.customer_email as email,  
+		st.name as status, b.status as status_id,
+		(SELECT sum(weight_total_value) FROM v_final_budget WHERE budget_id = b.id) as valor_total  
+		FROM budget b 
+		JOIN users own ON b.owner_id = own.id
+		JOIN status st ON b.status = st.id
+		WHERE b.id = :bdg_id");
+		$sql->bindValue(":bdg_id", $id);
+		$sql->execute();
+		
+		if ($sql->rowCount() > 0) {
+			$array = $sql->fetch();
+		}
+
+		return json_encode($array);
+
+	}
+	/*public function store($data)
 	{
 		$sql = $this->db->prepare("INSERT INTO budget 
 			SET owner_id = :owner_id, 
@@ -68,7 +88,7 @@ class Orcamento extends model
 		} else {
 			return false;
 		}
-	}
+	}*/
 
 	public function showItems($budget_id)
 	{

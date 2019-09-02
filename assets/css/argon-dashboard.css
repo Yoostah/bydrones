@@ -20761,3 +20761,7 @@ form.cadastro .modal-body {
   cursor: pointer;
   text-decoration: underline;
 }
+
+i.modalInfo{
+  font-size: 18px;
+}

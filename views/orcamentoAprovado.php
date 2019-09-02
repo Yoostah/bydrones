@@ -1,16 +1,16 @@
 <!-- Modal -->
-<div class="modal fade" id="modalCadastro" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+<div class="modal fade" id="modalInfo" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title" id="modalTitle">Preencha dos dados do Orçamento</h2>
+        <h2 class="modal-title" id="modalTitle">Dados do Orçamento</h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <!-- ... -->
-        <form class="cadastro" method="POST" action="<?php echo BASE_URL; ?>orcamento/store">
+        <form class="cadastro">
           <div class="row">
             <div class="col-md-12">
               <label for="email">Nome</label>
@@ -105,7 +105,6 @@
           </div>
           <div class="row modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-            <button type="submit" class="btn btn-primary">Salvar</button>
           </div>
         </form>
         <!-- ... -->
@@ -115,93 +114,68 @@
   </div>
 </div>
 <script>
+function getInfo(id) {
+  //alert(id);
+  var base_url = `http://localhost/bydrones/`;
+  $.ajax({
+    type: "POST",
+    url: base_url + "orcamentoaprovado/info/" + id,
+    dataType: "json",
+    success: function(budget) {
+      $('#nome').val(budget.customer).prop('disabled', true);
+      $('#email').val(budget.email).prop('disabled', true);
+
+    }
+  });
+
+}
 $(document).ready(function() {
-  $('#check_hospedagem').click(function() {
-    var check = document.getElementById("check_hospedagem");
-    if (check.checked) {
-      $('#qtd_hospedagem').show();
-      $('#hospedagem').prop("required", true);
-    } else {
-      $('#qtd_hospedagem').hide();
-      $('#hospedagem').prop("required", false);
-    }
 
-  });
-
-  $('#check_alimentacao').click(function() {
-    var check = document.getElementById("check_alimentacao");
-    if (check.checked) {
-      $('#qtd_alimentacao').show();
-      $('#alimentacao').prop("required", true);
-    } else {
-      $('#qtd_alimentacao').hide();
-      $('#alimentacao').prop("required", false);
-    }
-
-  });
-
-  $('#check_deslocamento').click(function() {
-    var check = document.getElementById("check_deslocamento");
-    if (check.checked) {
-      $('#qtd_deslocamento').show();
-      $('#deslocamento').prop("required", true);
-    } else {
-      $('#qtd_deslocamento').hide();
-      $('#deslocamento').prop("required", false);
-    }
-
-  });
 });
 </script>
 <div class="container-fluid">
+
   <div class="col">
     <div class="card shadow">
-      <div class="card-header border-0 label_page">
-        <h3 class="mb-0">Orçamentos</h3>
-        <!-- Botão para acionar modal -->
-        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalCadastro">
-          Novo Orçamento
-        </button>
+      <div class="card-header border-0">
+        <h3 class="mb-0">Vôos Confirmados</h3>
       </div>
       <div class="table-responsive">
-
-        <table class="table align-items-center">
+        <table class="table align-items-center table-flush">
           <thead class="thead-light">
             <tr>
               <th scope="col">Cliente</th>
-              <th scope="col">Valor</th>
-              <th scope="col">Data</th>
+              <th scope="col">Valor </th>
               <th scope="col">Status</th>
               <th scope="col">Responsável</th>
+              <th scope="col">Data</th>
               <th scope="col">Progresso</th>
               <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
             <?php
-            if (count($orcamentos) == 0) {
-              echo '<tr><td class="no_result" colspan="100">Nenhum Orçamento cadastrado.</td></tr>';
-            } else {
-              foreach ($orcamentos as $orcamento) {
-                //print_r($orcamentos);
-                $status = $this->checkProgress($orcamento['status_id']);
-                ?>
-            <tr class="">
+          if (count($orcamentos) == 0) {
+            echo '<tr><td class="no_result" colspan="100">Nenhum Orçamento Aprovado.</td></tr>';
+          } else {
+            foreach ($orcamentos as $orcamento) {
+              $status = $this->checkProgress($orcamento['status_id']); ?>
+            <tr>
               <th scope="row">
                 <div class="media align-items-center">
                   <a href="#" class="avatar rounded-circle mr-3">
-                    <img alt="Image placeholder" src="<?php echo BASE_URL; ?>assets/img/brand/drone.svg">
+                    <img alt="Image placeholder" src=" <?php echo BASE_URL; ?>assets/img/brand/drone.svg">
                   </a>
                   <div class="media-body">
                     <span class="mb-0 text-sm"><?php echo $orcamento['customer'] ?></span>
                   </div>
                 </div>
               </th>
-              <td class="cursor" data-toggle="collapse" data-target="#items_<?php echo $orcamento['id'] ?>">
-                <strong>R$ <?php echo number_format($orcamento['valor_total'], 2, ',', '.') ?></strong>
-              </td>
               <td>
-                <strong><?php echo $orcamento['createdAt'] ?></strong>
+                <strong class="cursor" data-toggle="collapse" data-target="#items_<?php echo $orcamento['id'] ?>">R$
+                  <?php echo number_format($orcamento['valor_total'], 2, ',', '.'); ?></strong>
+                <i class="fa fa-search-dollar text-red modalInfo" onclick="getInfo(<?php echo $orcamento['id']; ?>)"
+                  data-toggle="modal" data-target="#modalInfo"></i>
               </td>
               <td>
                 <span class="badge badge-dot mr-4">
@@ -215,6 +189,11 @@ $(document).ready(function() {
                       class="rounded-circle">
                   </a>
                 </div>
+              </td>
+              <td>
+                <span class="badge badge-dot mr-4">
+                  <?php echo $orcamento['data_agendamento'] ?>
+                </span>
               </td>
               <td>
                 <div class="d-flex align-items-center">
@@ -235,19 +214,11 @@ $(document).ready(function() {
                     <i class="fas fa-ellipsis-v"></i>
                   </a>
                   <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                    <a class="dropdown-item <?php echo (empty($orcamento['email']))?'isDisabled':''; ?>"
-                      onclick="return <?php echo (empty($orcamento['email']))?'false':'true'; ?>"
-                      href="<?php echo (empty($orcamento['email']))? '':BASE_URL . 'email/orcamento/' . $orcamento['id'] ?>"><i
-                        class="fa fa-envelope"></i>Enviar por E-mail</a>
+                    <a class="dropdown-item" href="#">Confirmar Vôo</a>
+                    <a class="dropdown-item" href="#">Reagendar Vôo</a>
                     <hr class="my-3">
-                    <a class="dropdown-item" href="#">Editar</a>
-                    <hr class="my-3">
-                    <a class="dropdown-item text-green"
-                      href="<?php echo BASE_URL . 'orcamento/aprovarOrcamento/' . $orcamento['id'] ?>"><i
-                        class="ni ni-check-bold"></i>Aprovar</a>
-                    <a class="dropdown-item text-red"
-                      href="<?php echo BASE_URL . 'orcamento/reprovarOrcamento/' . $orcamento['id'] ?>"><i
-                        class="fa fa-ban"></i>Reprovar</a>
+                    <a class="dropdown-item" href="#">Marcar como Concluído</a>
+                    <a class="dropdown-item" href="#">Cancelar Vôo</a>
                   </div>
                 </div>
               </td>
@@ -287,11 +258,10 @@ $(document).ready(function() {
               </td>
             </tr>
             <?php
-                } ?>
+            }
+          }
+          ?>
           </tbody>
-          <?php
-        }
-        ?>
         </table>
       </div>
       <div class="card-footer py-4">

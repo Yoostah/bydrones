@@ -123,7 +123,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link " href="<?php echo BASE_URL; ?>voos">
+            <a class="nav-link " href="<?php echo BASE_URL; ?>orcamentoAprovado">
               <i class="ni ni-spaceship text-primary"></i> Vôos Confirmados
             </a>
           </li>
