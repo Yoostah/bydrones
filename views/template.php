@@ -223,12 +223,6 @@
     <div class="header bg-gradient-primary">
 
     </div>
-    <div style="display:flex; flex-direction:row; justify-content:space-around; padding: 10px">
-      <i class="fas fa-chart-area fa-10x" style="var(--primary)"></i>
-      <i class="fas fa-route fa-10x"></i>
-      <i class="fas fa-utensils fa-10x"></i>
-      <i class="fas fa-hotel fa-10x"></i>
-    </div>
 
     <div class="content">
       <?php $this->loadViewInTemplate($viewName, $viewData); ?>

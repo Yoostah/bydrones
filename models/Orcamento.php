@@ -8,10 +8,11 @@ class Orcamento extends model
 		$sql = $this->db->query("
 		SELECT b.id, own.name as owner, b.customer_name as customer, b.customer_email as email, DATE_FORMAT(b.creation_date, '%d/%m/%Y %H:%i') as createdAt, b.limit_date, 
 		st.name as status, b.status as status_id,
-		(SELECT sum(weight_total_value) FROM v_final_budget WHERE budget_id = b.id) as valor_total  
+		(SELECT format(sum(weight_total_value),2,'de_DE') FROM v_final_budget WHERE budget_id = b.id) as valor_total  
 		FROM budget b 
 		JOIN users own ON b.owner_id = own.id
 		JOIN status st ON b.status = st.id
+		WHERE b.status <> 4
 		ORDER BY createdAt");
 		if ($sql->rowCount() > 0) {
 			$array = $sql->fetchAll();
@@ -82,9 +83,20 @@ class Orcamento extends model
 		}
 	}
 
+	public function budgetCustomerInfo($budget_id){
+		$sql = $this->db->prepare("SELECT customer_name as name, customer_email as email FROM budget
+			WHERE id = :bdg_id");
+		$sql->bindValue(":bdg_id", $budget_id);
+		$sql->execute();
+		if ($sql->rowCount() > 0) {
+			$array = $sql->fetchAll();
+			return $array;
+		}
+	}
+
 	public function accept($budget_id)
 	{
-		$sql_consult = $this->db->query('SELECT * FROM budget WHERE id = ' . $budget_id . ' AND status = 3');
+		$sql_consult = $this->db->query('SELECT * FROM budget WHERE id = ' . $budget_id . ' AND status <> 3');
 		if ($sql_consult->rowCount() > 0) {
 			$sql_update = $this->db->query("UPDATE budget SET status = 4 WHERE id = " . $budget_id);
 			$sql_update->execute();
@@ -96,9 +108,21 @@ class Orcamento extends model
 
 	public function deny($budget_id)
 	{
-		$sql_consult = $this->db->query('SELECT * FROM budget WHERE id = ' . $budget_id . ' AND status = 3');
+		$sql_consult = $this->db->query('SELECT * FROM budget WHERE id = ' . $budget_id . ' AND status <> 3');
 		if ($sql_consult->rowCount() > 0) {
 			$sql_update = $this->db->query("UPDATE budget SET status = 5 WHERE id = " . $budget_id);
+			$sql_update->execute();
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function sendOrcamentoByEmail($budget_id)
+	{
+		$sql_consult = $this->db->query('SELECT * FROM budget WHERE id = ' . $budget_id . ' AND status = 3');
+		if ($sql_consult->rowCount() > 0) {
+			$sql_update = $this->db->query("UPDATE budget SET status = 7 WHERE id = " . $budget_id);
 			$sql_update->execute();
 			return true;
 		} else {

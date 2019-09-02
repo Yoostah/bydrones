@@ -20749,3 +20749,15 @@ form.cadastro .modal-body {
 .modal-body{
   padding-bottom: 10px;
 }
+
+.isDisabled {
+  color: currentColor;
+  cursor: not-allowed;
+  opacity: 0.5;
+  text-decoration: none;
+}
+
+.cursor {
+  cursor: pointer;
+  text-decoration: underline;
+}

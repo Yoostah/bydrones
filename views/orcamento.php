@@ -186,7 +186,7 @@ $(document).ready(function() {
                 //print_r($orcamentos);
                 $status = $this->checkProgress($orcamento['status_id']);
                 ?>
-            <tr class="" data-toggle="collapse" data-target="#items_<?php echo $orcamento['id'] ?>">
+            <tr class="">
               <th scope="row">
                 <div class="media align-items-center">
                   <a href="#" class="avatar rounded-circle mr-3">
@@ -197,7 +197,7 @@ $(document).ready(function() {
                   </div>
                 </div>
               </th>
-              <td>
+              <td class="cursor" data-toggle="collapse" data-target="#items_<?php echo $orcamento['id'] ?>">
                 <strong>R$ <?php echo $orcamento['valor_total'] ?></strong>
               </td>
               <td>
@@ -235,13 +235,14 @@ $(document).ready(function() {
                     <i class="fas fa-ellipsis-v"></i>
                   </a>
                   <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                    <a class="dropdown-item" href="#">Enviar por E-mail</a>
+                    <a class="dropdown-item <?php echo (empty($orcamento['email']))?'isDisabled':''; ?>" onclick="return <?php echo (empty($orcamento['email']))?'false':'true'; ?>" href="<?php echo (empty($orcamento['email']))? '':BASE_URL . 'email/orcamento/' . $orcamento['id'] ?>"><i class="fa fa-envelope"></i>Enviar por E-mail</a>
                     <hr class="my-3">
                     <a class="dropdown-item" href="#">Editar</a>
-                    <a class="dropdown-item"
-                      href="<?php echo BASE_URL . 'orcamento/aprovarOrcamento/' . $orcamento['id'] ?>">Aprovar</a>
-                    <a class="dropdown-item"
-                      href="<?php echo BASE_URL . 'orcamento/reprovarOrcamento/' . $orcamento['id'] ?>">Reprovar</a>
+                    <hr class="my-3">
+                    <a class="dropdown-item text-green"
+                      href="<?php echo BASE_URL . 'orcamento/aprovarOrcamento/' . $orcamento['id'] ?>"><i class="ni ni-check-bold"></i>Aprovar</a>
+                    <a class="dropdown-item text-red"
+                      href="<?php echo BASE_URL . 'orcamento/reprovarOrcamento/' . $orcamento['id'] ?>"><i class="fa fa-ban"></i>Reprovar</a>
                   </div>
                 </div>
               </td>

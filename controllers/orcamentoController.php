@@ -37,6 +37,15 @@ class orcamentoController extends controller
 		}
 	}
 
+	public function enviarEmail($id)
+	{
+		$orcamento = new Orcamento();
+
+		$orcamento->sendOrcamentoByEmail(addslashes($id));
+
+		$this->index();
+	}
+
 	public function aprovarOrcamento($id)
 	{
 		$orcamento = new Orcamento();
@@ -54,12 +63,7 @@ class orcamentoController extends controller
 
 		$this->index();
 	}
-
-	public function teste($id)
-	{
-		echo $id;
-	}
-
+	
 	public function showItems($budget_id)
 	{
 		$orcamento = new Orcamento();
