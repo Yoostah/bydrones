@@ -93,7 +93,7 @@ class emailController extends controller
     include dirname(dirname(__FILE__)) . '/views/email/orcamento.php';
     //echo orcamento($linhas_de_servico);
 
-    $send = $this->sendMail($titulo, trim(strtolower($destinatario[0]['email'])), orcamento($linhas_de_servico));
+    $send = $this->sendMail($titulo, trim(strtolower($destinatario[0]['email'])), orcamento($linhas_de_servico, $id));
     if(!$send){
       $orcamento->sendOrcamentoByEmail($id);
       header("Location: ".BASE_URL.'orcamento');

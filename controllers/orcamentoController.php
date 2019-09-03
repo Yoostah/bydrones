@@ -5,9 +5,14 @@ class orcamentoController extends controller
 	public function index()
 	{
 		$orcamento = new Orcamento();
+		$orcamentos = $orcamento->index();
+		
+		$total_budgets = $orcamento->budgets_count(); 
+		$total_paginas = ceil($total_budgets['rows'] / 10);
 
 		$dados = array(
-			'orcamentos' => $orcamento->index()
+			'orcamentos' => $orcamento->index(),
+			'total_paginas' => $total_paginas
 		);
 
 		$this->loadTemplate('orcamento', $dados);
@@ -55,6 +60,15 @@ class orcamentoController extends controller
 		$this->index();
 	}
 
+	public function aprovarOrcamentoMail($id)
+	{
+		$orcamento = new Orcamento();
+
+		$orcamento->accept(addslashes($id));
+
+		echo '<h1>Orçamento Aprovado.</h1><h2>Aguarde nosso Contato!</h2>';
+	}
+
 	public function reprovarOrcamento($id)
 	{
 		$orcamento = new Orcamento();
@@ -63,12 +77,55 @@ class orcamentoController extends controller
 
 		$this->index();
 	}
+
+	public function reprovarOrcamentoMail($id)
+	{
+		$orcamento = new Orcamento();
+
+		$orcamento->deny(addslashes($id));
+
+		echo '<h1>Orçamento Reprovado.</h1><h2>Aguarde nosso Contato!</h2>';
+	}
 	
 	public function showItems($budget_id)
 	{
 		$orcamento = new Orcamento();
 
 		return $orcamento->showItems($budget_id);
+	}
+
+	public function geraPDF($budget_id){
+		require_once dirname(dirname(__FILE__)) . '/vendor/autoload.php';
+		$pdf = new \Mpdf\Mpdf();
+
+		$orcamento = new Orcamento();
+    $dados = $orcamento->showItems($budget_id);
+
+    $email = new MailOrcamento();
+    $destinatario = $orcamento->budgetCustomerInfo($budget_id);
+
+    $linhas_de_servico = '';
+    $troca_cor = 1;
+    foreach ($dados as $key => $value) {
+      if ($troca_cor) {
+        $linhas_de_servico .= $email->montaOrcamentoLinhaBranca($value['cat_image'] . '.png', $value['name'], $value['weight_quantity'] + 0, 'R$
+        ' . $value['weight_total_value']);
+        $troca_cor--;
+      } else {
+        $linhas_de_servico .= $email->montaOrcamentoLinhaCinza($value['cat_image'] . '.png', $value['name'], $value['weight_quantity'] + 0, 'R$
+        ' . $value['weight_total_value']);
+        $troca_cor++;
+      }
+    }
+
+    $linhas_de_servico .= $email->montaOrcamentoSomatorio('R$
+    ' . $dados[0]['TOTAL']);
+
+    include dirname(dirname(__FILE__)) . '/views/email/orcamento.php';
+
+
+		$pdf->WriteHTML(orcamento($linhas_de_servico));
+		$pdf->Output();
 	}
 
 	public function checkProgress($status)

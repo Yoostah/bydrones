@@ -40,6 +40,19 @@ class OrcamentoAprovado extends model
 		return json_encode($array);
 
 	}
+
+	public function budgets_count(){
+		$row_count = 0;
+		$sql = $this->db->query("
+			SELECT count(*) as rows FROM budget b
+			WHERE b.status IN (4,8,9)");
+
+		if ($sql->rowCount() > 0) {
+			$row_count = $sql->fetch();
+		}
+
+		return $row_count;
+	}
 	/*public function store($data)
 	{
 		$sql = $this->db->prepare("INSERT INTO budget 

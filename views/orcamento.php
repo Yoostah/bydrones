@@ -239,6 +239,8 @@ $(document).ready(function() {
                       onclick="return <?php echo (empty($orcamento['email']))?'false':'true'; ?>"
                       href="<?php echo (empty($orcamento['email']))? '':BASE_URL . 'email/orcamento/' . $orcamento['id'] ?>"><i
                         class="fa fa-envelope"></i>Enviar por E-mail</a>
+                    <a class="dropdown-item" href="<?php echo BASE_URL . 'orcamento/geraPDF/' . $orcamento['id'] ?>"><i
+                        class="far fa-file-pdf"></i>Gerar PDF</a>
                     <hr class="my-3">
                     <a class="dropdown-item" href="#">Editar</a>
                     <hr class="my-3">
@@ -295,27 +297,44 @@ $(document).ready(function() {
         </table>
       </div>
       <div class="card-footer py-4">
-        <nav aria-label="...">
+        <nav>
+          <?php 
+          //Checar página atual
+          $pagina_atual = min($total_paginas, filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT, array(
+            'options' => array(
+                'default'   => 1,
+                'min_range' => 1,
+            ),
+          )));
+
+          ?>
+
           <ul class="pagination justify-content-end mb-0">
-            <li class="page-item disabled">
-              <a class="page-link" href="#" tabindex="-1">
+            <?php 
+            echo ($pagina_atual > 1) ?
+            '<li class="page-item">
+              <a class="page-link" href="'. BASE_URL.'orcamento?page='.($pagina_atual - 1).'" tabindex="-1">
                 <i class="fas fa-angle-left"></i>
-                <span class="sr-only">Previous</span>
               </a>
+            </li>':'';
+            if($total_paginas > 1){
+              for ($page = 1; $page <= $total_paginas; $page++){?>
+            <li class="page-item 
+                  <?php echo ( (!isset($_GET['page']) && $page == 1) || (isset($_GET['page']) && !empty($_GET['page'] && $_GET['page'] == $page)))?
+                  'active':'' ?>">
+              <a class="page-link" href="<?php echo BASE_URL.'orcamento?page='.$page; ?>"><?php echo $page;?></a>
             </li>
-            <li class="page-item active">
-              <a class="page-link" href="#">1</a>
-            </li>
-            <li class="page-item">
-              <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#">
+            <?php
+              }
+            };           
+            
+            echo ($pagina_atual < $total_paginas) ?
+            '<li class="page-item">
+              <a class="page-link" href="'.BASE_URL.'orcamento?page='.($pagina_atual + 1).'">
                 <i class="fas fa-angle-right"></i>
-                <span class="sr-only">Next</span>
               </a>
-            </li>
+            </li>':'';
+            ?>
           </ul>
         </nav>
       </div>

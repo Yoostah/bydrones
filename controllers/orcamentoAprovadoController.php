@@ -5,9 +5,12 @@ class orcamentoAprovadoController extends controller
 	public function index()
 	{
 		$orcamento = new OrcamentoAprovado();
+		$total_budgets = $orcamento->budgets_count(); 
+		$total_paginas = ceil($total_budgets['rows'] / 10);
 
 		$dados = array(
-			'orcamentos' => $orcamento->index()
+			'orcamentos' => $orcamento->index(),
+			'total_paginas' => $total_paginas
 		);
 
 		$this->loadTemplate('orcamentoAprovado', $dados);

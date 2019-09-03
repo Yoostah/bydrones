@@ -4,7 +4,10 @@ class Orcamento extends model
 
 	public function index()
 	{
+		$page = (isset($_GET['page']) && !empty($_GET['page']))? addslashes($_GET['page']):'1';
+
 		$array = array();
+		
 		$sql = $this->db->query("
 		SELECT b.id, own.name as owner, b.customer_name as customer, b.customer_email as email, DATE_FORMAT(b.creation_date, '%d/%m/%Y %H:%i') as createdAt, b.limit_date, 
 		st.name as status, b.status as status_id,
@@ -12,12 +15,28 @@ class Orcamento extends model
 		FROM budget b 
 		JOIN users own ON b.owner_id = own.id
 		JOIN status st ON b.status = st.id
-		WHERE b.status IN (3,5,6,7) 
-		ORDER BY createdAt");
+		WHERE b.status IN (3,5,6,7)
+		 
+		ORDER BY createdAt
+		LIMIT ".(($page-1)*10).", 10");
+
 		if ($sql->rowCount() > 0) {
 			$array = $sql->fetchAll();
 		}
 		return $array;
+	}
+
+	public function budgets_count(){
+		$row_count = 0;
+		$sql = $this->db->query("
+			SELECT count(*) as rows FROM budget b
+			WHERE b.status IN (3,5,6,7)");
+
+		if ($sql->rowCount() > 0) {
+			$row_count = $sql->fetch();
+		}
+
+		return $row_count;
 	}
 
 	public function store($data)
