@@ -16,11 +16,7 @@ class orcamentoAprovadoController extends controller
 		$this->loadTemplate('orcamentoAprovado', $dados);
 	}
 
-	public function info($id){
-		$orcamento = new OrcamentoAprovado();
-		$orcamento = $orcamento->findOne(addslashes($id));
-		echo $orcamento;
-	}
+	
 	/*public function store()
 	{
 		if (isset($_POST['nome']) && !empty($_POST['nome'])) {

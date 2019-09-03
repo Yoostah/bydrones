@@ -58,6 +58,7 @@
                   <option value="6">Acima de 50ha com obstáculos</option>
                   <option value="7">Abaixo de 50ha com declive</option>
                   <option value="8">Acima de 50ha com declive</option>
+                  <option value="14">Pulverização (DIÁRIA)</option>
                 </select>
               </div>
             </div>
@@ -107,6 +108,7 @@
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
             <button type="submit" class="btn btn-primary">Salvar</button>
           </div>
+          <input id="update" type="hidden" value="" name="update">
         </form>
         <!-- ... -->
       </div>
@@ -115,6 +117,65 @@
   </div>
 </div>
 <script>
+function resetModal() {
+  $('#update').val('');
+  $('#nome').val('');
+  $('#email').val('');
+  $('#tipo_area').val('');
+  $('#hectares').val('');
+  $('#hospedagem').prop("required", false);
+  $('#hospedagem').val('');
+  $('#qtd_hospedagem').hide();
+  $('#check_hospedagem').prop('checked', false);
+
+  $('#alimentacao').prop("required", false);
+  $('#alimentacao').val('');
+  $('#qtd_alimentacao').hide();
+  $('#check_alimentacao').prop('checked', false);
+
+  $('#deslocamento').prop("required", false);
+  $('#deslocamento').val('');
+  $('#qtd_deslocamento').hide();
+  $('#check_deslocamento').prop('checked', false);
+
+}
+
+function editInfo(id) {
+  //alert(id);
+  var base_url = `http://localhost/bydrones/`;
+  $.ajax({
+    type: "POST",
+    url: base_url + "orcamento/info/" + id,
+    dataType: "json",
+    success: function(budget) {
+      resetModal();
+      $('#update').val(budget.budget_id);
+      $('#nome').val(budget.customer);
+      $('#email').val(budget.email);
+      $('#tipo_area').val(budget.area_id);
+      $('#hectares').val(budget.Area);
+      if (budget.Deslocamento != null) {
+        $('#check_deslocamento').prop('checked', true);
+        $('#qtd_deslocamento').show();
+        $('#deslocamento').prop("required", true);
+        $('#deslocamento').val(budget.Deslocamento);
+      }
+      if (budget.Alimentação != null) {
+        $('#check_alimentacao').prop('checked', true);
+        $('#qtd_alimentacao').show();
+        $('#alimentacao').prop("required", true);
+        $('#alimentacao').val(budget.Alimentação);
+      }
+      if (budget.Hospedagem != null) {
+        $('#check_hospedagem').prop('checked', true);
+        $('#qtd_hospedagem').show();
+        $('#hospedagem').prop("required", true);
+        $('#hospedagem').val(budget.Hospedagem);
+      }
+    }
+  });
+
+}
 $(document).ready(function() {
   $('#check_hospedagem').click(function() {
     var check = document.getElementById("check_hospedagem");
@@ -159,7 +220,8 @@ $(document).ready(function() {
       <div class="card-header border-0 label_page">
         <h3 class="mb-0">Orçamentos</h3>
         <!-- Botão para acionar modal -->
-        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modalCadastro">
+        <button type="button" class="btn btn-sm btn-primary" onclick="resetModal()" data-toggle="modal"
+          data-target="#modalCadastro">
           Novo Orçamento
         </button>
       </div>
@@ -242,7 +304,8 @@ $(document).ready(function() {
                     <a class="dropdown-item" href="<?php echo BASE_URL . 'orcamento/geraPDF/' . $orcamento['id'] ?>"><i
                         class="far fa-file-pdf"></i>Gerar PDF</a>
                     <hr class="my-3">
-                    <a class="dropdown-item" href="#">Editar</a>
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalCadastro"
+                      onclick="editInfo(<?php echo $orcamento['id']; ?>)">Editar</a>
                     <hr class="my-3">
                     <a class="dropdown-item text-green"
                       href="<?php echo BASE_URL . 'orcamento/aprovarOrcamento/' . $orcamento['id'] ?>"><i

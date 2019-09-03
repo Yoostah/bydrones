@@ -23,6 +23,7 @@ class orcamentoController extends controller
 		if (isset($_POST['nome']) && !empty($_POST['nome'])) {
 			$orcamento = new Orcamento();
 
+			$id = isset($_POST['update']) && !empty($_POST['update']) ? addslashes($_POST['update']) : null;
 			$deslocamento = ["item" => 11, "value" => (isset($_POST['deslocamento']) && !empty($_POST['deslocamento'])) ? addslashes($_POST['deslocamento']) : null];
 			$area = ["item" => addslashes($_POST['tipo_area']), "value" => addslashes($_POST['tamanho_area'])];
 			$hospedagem = ["item" => 12, "value" => (isset($_POST['hospedagem']) && !empty($_POST['hospedagem'])) ? addslashes($_POST['hospedagem']) : null];
@@ -35,11 +36,21 @@ class orcamentoController extends controller
 				'servicos' => [$deslocamento, $area, $hospedagem, $alimentacao]
 			);
 			unset($_POST);
-
-			$insertedId = $orcamento->store($data);
+			
+			if($id === null){
+				$orcamento->store($data);
+			}else{
+				$orcamento->update($id,$data);
+			}
 
 			$this->index();
 		}
+	}
+
+	public function info($id){
+		$orcamento = new Orcamento();
+		$orcamento = $orcamento->findOne(addslashes($id));
+		echo $orcamento;
 	}
 
 	public function enviarEmail($id)
@@ -62,11 +73,14 @@ class orcamentoController extends controller
 
 	public function aprovarOrcamentoMail($id)
 	{
-		$orcamento = new Orcamento();
+		$orcamento = new Orcamento();	
 
-		$orcamento->accept(addslashes($id));
-
-		echo '<h1>Orçamento Aprovado.</h1><h2>Aguarde nosso Contato!</h2>';
+		$retorno = $orcamento->accept(addslashes($id));
+		if($retorno){
+			echo '<h1>Orçamento Aprovado.</h1><h2>Aguarde nosso Contato!</h2>';
+		}else{
+			echo '<h1>Este Orçamento já foi encaminhado aos Consultores</h1><h2>Aguarde nosso Contato!</h2>';
+		}	
 	}
 
 	public function reprovarOrcamento($id)
@@ -82,9 +96,12 @@ class orcamentoController extends controller
 	{
 		$orcamento = new Orcamento();
 
-		$orcamento->deny(addslashes($id));
-
-		echo '<h1>Orçamento Reprovado.</h1><h2>Aguarde nosso Contato!</h2>';
+		$retorno = $orcamento->deny(addslashes($id));
+		if($retorno){
+			echo '<h1>Orçamento Reprovado.</h1><h2>Aguarde nosso Contato!</h2>';
+		}else{
+			echo '<h1>Este Orçamento já foi encaminhado aos Consultores</h1><h2>Aguarde nosso Contato!</h2>';
+		}	
 	}
 	
 	public function showItems($budget_id)

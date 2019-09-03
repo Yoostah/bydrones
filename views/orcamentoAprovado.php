@@ -119,7 +119,7 @@ function getInfo(id) {
   var base_url = `http://localhost/bydrones/`;
   $.ajax({
     type: "POST",
-    url: base_url + "orcamentoaprovado/info/" + id,
+    url: base_url + "orcamento/info/" + id,
     dataType: "json",
     success: function(budget) {
       $('#nome').val(budget.customer).prop('disabled', true);

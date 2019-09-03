@@ -18,28 +18,7 @@ class OrcamentoAprovado extends model
 			$array = $sql->fetchAll();
 		}
 		return $array;
-	}
-
-	public function findOne($id){
-		$array = array();
-		$sql = $this->db->prepare("
-		SELECT b.id, own.name as owner, b.customer_name as customer, b.customer_email as email,  
-		st.name as status, b.status as status_id,
-		(SELECT sum(weight_total_value) FROM v_final_budget WHERE budget_id = b.id) as valor_total  
-		FROM budget b 
-		JOIN users own ON b.owner_id = own.id
-		JOIN status st ON b.status = st.id
-		WHERE b.id = :bdg_id");
-		$sql->bindValue(":bdg_id", $id);
-		$sql->execute();
-		
-		if ($sql->rowCount() > 0) {
-			$array = $sql->fetch();
-		}
-
-		return json_encode($array);
-
-	}
+	}	
 
 	public function budgets_count(){
 		$row_count = 0;
