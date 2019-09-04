@@ -34,8 +34,8 @@ class emailController extends controller
 
     $mail->Host = "tls://smtp.gmail.com:587";
     $mail->SMTPAuth = true;
-    $mail->Username = "dev04.grupopzm@gmail.com";
-    $mail->Password = "Padrao@998";
+    $mail->Username = "";
+    $mail->Password = "";
 
     $mail->setFrom('dev04.grupopzm@gmail.com', 'Thulio');
     $mail->addReplyTo('no-reply@gmail.com', 'Reply');
