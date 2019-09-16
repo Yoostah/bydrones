@@ -1,7 +1,11 @@
 <?php 
 class loginController extends controller
 {
-	private $auth;
+	protected $auth;	
+	public function __construct(){
+		//Sobrepondo construtor do controller para não verificar 
+		//se está logado e instanciar novamente o Login
+  }
 
 	public function index()
 	{
@@ -15,7 +19,7 @@ class loginController extends controller
 			'error' => ''
 		);
 
-		if($_SESSION['errorMsg']){
+		if(isset($_SESSION['errorMsg'])){
 			$dados['error'] = $_SESSION['errorMsg'];
 			$_SESSION['errorMsg'] = '';
 		}
@@ -30,12 +34,7 @@ class loginController extends controller
 			$senha = addslashes($_POST['password']);
 
 			$user = new Usuarios();
-			;
 			if($user->validate_login($email, $senha)){
-				//session_start();
-				//$_SESSION['user'] = $logado['name'];
-			//	$_SESSION['id']   = $logado['id'];
-			//	$_SESSION['is_admin'] = $logado['is_admin'];
 				header('Location:'.BASE_URL.'home');
 				exit;
 			}else{
