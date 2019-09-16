@@ -1,21 +1,37 @@
 <?php
 class orcamentoController extends controller
 {
+	private $auth;
+	private $dados;	
 
+	function __construct(){
+		$this->auth = new Login();
+
+		if(!($this->auth->isLogged())){
+			header('Location:'.BASE_URL.'login' );
+			exit;
+		};
+
+		$this->dados = array(
+			'user' => $this->auth
+		);
+	}	
+	
 	public function index()
 	{
+
 		$orcamento = new Orcamento();
 		$orcamentos = $orcamento->index();
 		
 		$total_budgets = $orcamento->budgets_count(); 
 		$total_paginas = ceil($total_budgets['rows'] / 10);
-
-		$dados = array(
-			'orcamentos' => $orcamento->index(),
-			'total_paginas' => $total_paginas
+		
+		$this->dados = array_merge($this->dados,
+			['orcamentos' => $orcamento->index()],
+			['total_paginas' => $total_paginas]
 		);
 
-		$this->loadTemplate('orcamento', $dados);
+		$this->loadTemplate('orcamento', $this->dados);
 	}
 
 	public function store()
@@ -23,24 +39,25 @@ class orcamentoController extends controller
 		if (isset($_POST['nome']) && !empty($_POST['nome'])) {
 			$orcamento = new Orcamento();
 
+			$user = $this->auth->getLoggedID();
 			$id = isset($_POST['update']) && !empty($_POST['update']) ? addslashes($_POST['update']) : null;
 			$deslocamento = ["item" => 11, "value" => (isset($_POST['deslocamento']) && !empty($_POST['deslocamento'])) ? addslashes($_POST['deslocamento']) : null];
 			$area = ["item" => addslashes($_POST['tipo_area']), "value" => addslashes($_POST['tamanho_area'])];
 			$hospedagem = ["item" => 12, "value" => (isset($_POST['hospedagem']) && !empty($_POST['hospedagem'])) ? addslashes($_POST['hospedagem']) : null];
 			$alimentacao = ["item" => 13, "value" => (isset($_POST['alimentacao']) && !empty($_POST['alimentacao'])) ? addslashes($_POST['alimentacao']) : null];
 
-			$data = array(
+			$dados = array(
 				'nome' => addslashes($_POST['nome']),
 				'email' => (isset($_POST['email']) && !empty($_POST['email'])) ? addslashes($_POST['email']) : null,
-
+				'user' => $user,
 				'servicos' => [$deslocamento, $area, $hospedagem, $alimentacao]
 			);
 			unset($_POST);
 			
 			if($id === null){
-				$orcamento->store($data);
+				$orcamento->store($dados);
 			}else{
-				$orcamento->update($id,$data);
+				$orcamento->update($id,$dados);
 			}
 
 			$this->index();

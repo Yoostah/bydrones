@@ -9,7 +9,22 @@ require dirname(dirname(__FILE__)) . '/mail/SMTP.php';
 
 class emailController extends controller
 {
+  private $auth;
+	private $dados;	
 
+	function __construct(){
+		$this->auth = new Login();
+
+		if(!($this->auth->isLogged())){
+			header('Location:'.BASE_URL.'login' );
+			exit;
+		};
+
+		$this->dados = array(
+			'user' => $this->auth
+		);
+	}	
+  
   public function sendMail($titulo, $destinatario, $data = '')
   {
     $mail = new PHPMailer;

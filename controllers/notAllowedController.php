@@ -1,5 +1,5 @@
 <?php
-class homeController extends controller{
+class notAllowedController extends controller {
 
 	private $auth;
 	private $dados;	
@@ -16,9 +16,9 @@ class homeController extends controller{
 			'user' => $this->auth
 		);
 	}	
-
-	public function index()
-	{
-		$this->loadTemplate('home', $this->dados);
+	
+	public function index() {
+		$this->loadTemplate('notAllowed', $this->dados);
 	}
+
 }

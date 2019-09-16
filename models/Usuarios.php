@@ -30,20 +30,26 @@ class Usuarios extends model {
 
 	}
 
-	public function login($email, $senha) {
-		$sql = $this->db->prepare("SELECT id FROM usuarios WHERE email = :email AND senha = :senha");
+	public function validate_login($email, $senha) {
+		$sql = $this->db->prepare("SELECT id FROM users WHERE email = :email AND password_hash = :senha AND is_admin = 1");
 		$sql->bindValue(":email", $email);
 		$sql->bindValue(":senha", md5($senha));
 		$sql->execute();
 
 		if($sql->rowCount() > 0) {
 			$dado = $sql->fetch();
-			$_SESSION['cLogin'] = $dado['id'];
-			return true;
-		} else {
-			return false;
-		}
+			$token = md5(random_bytes(16).time().$dado['id']);
 
+			$sql = $this->db->prepare("UPDATE users SET token = :token WHERE id = :id");
+			$sql->bindValue(":token", $token);
+			$sql->bindValue(":id", $dado['id']);
+			$sql->execute();
+			
+			$_SESSION['token'] = $token;
+			return true;
+		} 
+
+		return false;
 	}
 
 

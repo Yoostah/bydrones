@@ -142,7 +142,7 @@ function resetModal() {
 
 function editInfo(id) {
   //alert(id);
-  var base_url = `http://localhost/bydrones/`;
+  var base_url = `http://localhost:8080/bydrones/`;
   $.ajax({
     type: "POST",
     url: base_url + "orcamento/info/" + id,
@@ -226,7 +226,6 @@ $(document).ready(function() {
         </button>
       </div>
       <div class="table-responsive">
-
         <table class="table align-items-center">
           <thead class="thead-light">
             <tr>

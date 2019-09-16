@@ -13471,6 +13471,10 @@ button.bg-lighter:focus {
   background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%) !important;
 }
 
+.bg-gradient-primary-login {
+  background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%) !important;
+}
+
 .bg-gradient-secondary {
   background: linear-gradient(87deg, #f7fafc 0, #f7f8fc 100%) !important;
 }
@@ -15582,6 +15586,9 @@ a.btn-icon-only {
 
 .main-content {
   position: relative;
+}
+.vh-login {
+  height: 100vh;
 }
 
 .main-content .navbar-top {
@@ -20764,4 +20771,20 @@ form.cadastro .modal-body {
 
 i.modalInfo{
   font-size: 18px;
+}
+
+.bs-callout {
+  padding: 20px;
+  margin: 20px 0;
+  border: 1px solid #eee;
+  border-left-width: 5px;
+  border-radius: 4px;
+}
+
+.bs-callout-danger {
+  border-left-color: #d9534f;
+  background-color: #fcf2f2;
+}
+.bs-callout-danger p {
+  color: #d9534f;
 }

@@ -112,7 +112,7 @@
         </form> -->
         <!-- MENU LATERAL -->
         <ul class="navbar-nav">
-          <li class="nav-item  class=" active" ">
+          <li class="nav-item  class="active">
           <a class=" nav-link active " href=" <?php echo BASE_URL; ?>"> <i class="ni ni-chart-pie-35 text-primary"></i>
             Dashboard
             </a>
@@ -128,6 +128,7 @@
             </a>
           </li>
         </ul>
+        <?php if($viewData['user']->isAdmin()) :?>
         <!-- Divider -->
         <hr class="my-3">
         <!-- Heading -->
@@ -156,6 +157,7 @@
             </a>
           </li>
         </ul>
+        <?php endif;?>
       </div>
     </div>
   </nav>
@@ -187,7 +189,7 @@
                   <img alt="Image placeholder" src="<?php echo BASE_URL; ?>assets/img/theme/team-1-800x800.jpg">
                 </span>
                 <div class="media-body ml-2 d-none d-lg-block">
-                  <span class="mb-0 text-sm  font-weight-bold">Thulio Guirelle Horta</span>
+                  <span class="mb-0 text-sm  font-weight-bold"><?php echo $viewData['user']->getLoggedName() ?></span>
                 </div>
               </div>
             </a>

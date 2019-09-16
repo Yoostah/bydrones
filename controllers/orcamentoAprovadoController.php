@@ -1,19 +1,34 @@
 <?php
 class orcamentoAprovadoController extends controller
 {
+	private $auth;
+	private $dados;	
 
+	function __construct(){
+		$this->auth = new Login();
+
+		if(!($this->auth->isLogged())){
+			header('Location:'.BASE_URL.'login' );
+			exit;
+		};
+
+		$this->dados = array(
+			'user' => $this->auth
+		);
+	}	
+	
 	public function index()
 	{
 		$orcamento = new OrcamentoAprovado();
 		$total_budgets = $orcamento->budgets_count(); 
 		$total_paginas = ceil($total_budgets['rows'] / 10);
 
-		$dados = array(
-			'orcamentos' => $orcamento->index(),
-			'total_paginas' => $total_paginas
+		$this->dados = array_merge($this->dados,
+			['orcamentos' => $orcamento->index()],
+			['total_paginas' => $total_paginas]
 		);
 
-		$this->loadTemplate('orcamentoAprovado', $dados);
+		$this->loadTemplate('orcamentoAprovado', $this->dados);
 	}
 
 	

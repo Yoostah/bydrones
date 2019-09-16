@@ -3,17 +3,17 @@ require 'environment.php';
 
 $config = array();
 if(ENVIRONMENT == 'development') {
-	define("BASE_URL", "http://localhost/bydrones/");
+	define("BASE_URL", "http://localhost:8080/bydrones/");
 	$config['dbname'] = 'yoosta74_bydronesapp';
 	$config['host'] = 'br954.hostgator.com.br';
 	$config['dbuser'] = 'yoosta74_thulio';
 	$config['dbpass'] = 'Padrao998';
 } else {
-	define("BASE_URL", "http://yoostah.com.br/ccheque");
-	$config['dbname'] = 'classificados';
+	define("BASE_URL", "http://localhost:8080/bydrones/");
+	$config['dbname'] = 'yoosta74_bydronesapp';
 	$config['host'] = 'localhost';
 	$config['dbuser'] = 'root';
-	$config['dbpass'] = 'root';
+	$config['dbpass'] = '';
 }
 
 global $db;

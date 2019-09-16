@@ -39,13 +39,14 @@ class Orcamento extends model
 	}
 
 	public function update($id, $data){
+
 		$sql = $this->db->prepare("UPDATE budget 
 			SET owner_id = :owner_id, 
 			customer_name = :customer_name, 
 			customer_email = :customer_email, 
 			status = :status
 			WHERE id = :budget_id");
-		$sql->bindValue(":owner_id", 1);
+		$sql->bindValue(":owner_id", $data['user']);
 		$sql->bindValue(":customer_name", $data['nome']);
 		$sql->bindValue(":customer_email", $data['email']);
 		$sql->bindValue(":status", 3); //Orçamento Pendente
@@ -86,6 +87,7 @@ class Orcamento extends model
 	}
 
 	public function store($data){
+
 		$sql = $this->db->prepare("INSERT INTO budget 
 			SET owner_id = :owner_id, 
 			customer_name = :customer_name, 
@@ -93,7 +95,8 @@ class Orcamento extends model
 			creation_date = :creation_date, 
 			limit_date = :limit_date,
 			status = :status");
-		$sql->bindValue(":owner_id", 1);
+
+		$sql->bindValue(":owner_id", $data['user']);
 		$sql->bindValue(":customer_name", $data['nome']);
 		$sql->bindValue(":customer_email", $data['email']);
 		$sql->bindValue(":creation_date", date("Y-m-d H:i:s", time()));
