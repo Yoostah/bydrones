@@ -1,5 +1,5 @@
 <?php
-class Usuarios extends model {
+class Usuarios extends Model {
 
 	public function getTotalUsuarios() {
 		$sql = $this->db->query("SELECT COUNT(*) as c FROM usuarios");
@@ -31,7 +31,7 @@ class Usuarios extends model {
 	}
 
 	public function validate_login($email, $senha) {
-		$sql = $this->db->prepare("SELECT id FROM users WHERE email = :email AND password_hash = :senha AND is_admin = 1");
+		$sql = $this->db->prepare("SELECT id FROM users WHERE email = :email AND password_hash = :senha");
 		$sql->bindValue(":email", $email);
 		$sql->bindValue(":senha", md5($senha));
 		$sql->execute();
@@ -48,7 +48,6 @@ class Usuarios extends model {
 			$_SESSION['token'] = $token;
 			return true;
 		} 
-
 		return false;
 	}
 

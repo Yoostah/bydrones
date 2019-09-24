@@ -112,9 +112,10 @@
         </form> -->
         <!-- MENU LATERAL -->
         <ul class="navbar-nav">
-          <li class="nav-item  class="active">
-          <a class=" nav-link active " href=" <?php echo BASE_URL; ?>"> <i class="ni ni-chart-pie-35 text-primary"></i>
-            Dashboard
+          <li class="nav-item  class=" active">
+            <a class=" nav-link active " href=" <?php echo BASE_URL; ?>"> <i
+                class="ni ni-chart-pie-35 text-primary"></i>
+              Dashboard
             </a>
           </li>
           <li class="nav-item">
@@ -128,7 +129,6 @@
             </a>
           </li>
         </ul>
-        <?php if($viewData['user']->isAdmin()) :?>
         <!-- Divider -->
         <hr class="my-3">
         <!-- Heading -->
@@ -140,6 +140,7 @@
             </a>
           </li>
         </ul>
+        <?php if($viewData['user']->isAdmin()) :?>
         <!-- Divider -->
         <hr class="my-3">
         <!-- Heading -->

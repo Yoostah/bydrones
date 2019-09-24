@@ -34,7 +34,7 @@
               </td>
               <td><strong>R$ </strong><?php echo $peso['value']; ?></td>
 
-              <td class="text-right">
+              <!-- <td class="text-right">
                 <div class="dropdown">
                   <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
@@ -44,7 +44,7 @@
                     <a class="dropdown-item" href="#">Editar</a>
                   </div>
                 </div>
-              </td>
+              </td> -->
             </tr>
             <?php
             }
@@ -54,7 +54,7 @@
           </tbody>
         </table>
       </div>
-      <div class="card-footer py-4">
+      <!-- <div class="card-footer py-4">
         <nav aria-label="...">
           <ul class="pagination justify-content-end mb-0">
             <li class="page-item disabled">
@@ -78,7 +78,7 @@
             </li>
           </ul>
         </nav>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>

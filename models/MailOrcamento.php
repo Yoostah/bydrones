@@ -1,5 +1,5 @@
 <?php
-class MailOrcamento extends model{
+class MailOrcamento extends Model{
   public function montaOrcamentoLinhaBranca($cat_image='_2.svg', $item_name='Item', $item_qtd='Quantidade', $item_valor='Valor'){
     //Linha Branca 
 return $linha = '<div style="background-color:transparent;">

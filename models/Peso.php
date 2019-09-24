@@ -1,5 +1,5 @@
 <?php
-class Peso extends model {
+class Peso extends Model {
 
 	public function index() {
 		$array = array();

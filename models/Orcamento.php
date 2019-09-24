@@ -1,5 +1,5 @@
 <?php
-class Orcamento extends model
+class Orcamento extends Model
 {
 
 	public function index(){

@@ -1,5 +1,5 @@
 <?php
-class OrcamentoAprovado extends model
+class OrcamentoAprovado extends Model
 {
 
 	public function index()

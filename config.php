@@ -9,11 +9,11 @@ if(ENVIRONMENT == 'development') {
 	$config['dbuser'] = 'yoosta74_thulio';
 	$config['dbpass'] = 'Padrao998';
 } else {
-	define("BASE_URL", "http://localhost:8080/bydrones/");
+	define("BASE_URL", "http://yoostah.com.br/bydrones/");
 	$config['dbname'] = 'yoosta74_bydronesapp';
-	$config['host'] = 'localhost';
-	$config['dbuser'] = 'root';
-	$config['dbpass'] = '';
+	$config['host'] = 'br954.hostgator.com.br';
+	$config['dbuser'] = 'yoosta74_thulio';
+	$config['dbpass'] = 'Padrao998';
 }
 
 global $db;
