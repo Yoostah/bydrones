@@ -116,7 +116,7 @@
 <script>
 function getInfo(id) {
   //alert(id);
-  var base_url = `http://localhost/bydrones/`;
+  var base_url = `<?php echo BASE_URL ?>`;
   $.ajax({
     type: "POST",
     url: base_url + "orcamento/info/" + id,
