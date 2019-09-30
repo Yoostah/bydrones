@@ -8,4 +8,10 @@ class Model {
 		$this->db = $db;
 	}
 
+	public function _pp($string){
+		echo '<pre>';
+		print_r($string);
+		echo '</pre>';
+	}
+
 }

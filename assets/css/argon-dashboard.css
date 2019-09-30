@@ -20718,7 +20718,17 @@ pre>code.highlight {
   width: 100%;
 }
 
+.budget_discount{
+  background-color: rgb(255, 184, 184);
+  color: #333;
+  font-weight: bold;
+}
 .budget_total{
+  background-color: #ccc;
+  color: #333;
+  font-weight: bold;
+}
+.budget_final{
   background-color: var(--primary);
   color: #fff;
   font-weight: bold;
@@ -20787,4 +20797,9 @@ i.modalInfo{
 }
 .bs-callout-danger p {
   color: #d9534f;
+}
+
+form.cadastro span.tipo_desconto {
+  font-weight: bold;
+  margin-right: 10px;
 }

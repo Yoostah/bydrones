@@ -15,7 +15,8 @@
             <div class="col-md-12">
               <label for="email">Nome</label>
               <div class="form-group">
-                <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome Cliente" required>
+                <input type="text" class="form-control form-control-sm" id="nome" name="nome" placeholder="Nome Cliente"
+                  required>
               </div>
             </div>
           </div>
@@ -23,7 +24,8 @@
             <div class="col-md-12">
               <label for="email">E-mail</label>
               <div class="form-group">
-                <input type="email" class="form-control" id="email" name="email" placeholder="E-mail Cliente">
+                <input type="email" class="form-control form-control-sm" id="email" name="email"
+                  placeholder="E-mail Cliente">
               </div>
             </div>
           </div>
@@ -38,9 +40,10 @@
               </div>
             </div>
             <div id="qtd_deslocamento" class="col-md-6 hidden">
-              <label for="deslocamento">Distância</label>
+              <label for="deslocamento"><span class="tipo_desconto">Distância</span></label>
               <div class="form-group">
-                <input type="number" class="form-control" id="deslocamento" name="deslocamento" placeholder="KM">
+                <input type="number" class="form-control form-control-sm" id="deslocamento" name="deslocamento"
+                  placeholder="KM">
               </div>
             </div>
           </div>
@@ -48,7 +51,7 @@
             <div class="col-md-8">
               <label for="email">Tipo de Área</label>
               <div class="form-group">
-                <select name="tipo_area" class="form-control" id="tipo_area" required>
+                <select name="tipo_area" class="form-control form-control-sm" id="tipo_area" required>
                   <option value="">Selecione um opção</option>
                   <option value="1">Abaixo de 50ha</option>
                   <option value="2">Acima de 50ha</option>
@@ -65,8 +68,8 @@
             <div class="col-md-4">
               <label for="email">Hectares</label>
               <div class="form-group">
-                <input type="number" class="form-control" id="hectares" name="tamanho_area" placeholder="Hectares"
-                  required>
+                <input type="number" class="form-control form-control-sm" id="hectares" name="tamanho_area"
+                  placeholder="Hectares" required>
               </div>
             </div>
           </div>
@@ -81,9 +84,10 @@
               </div>
             </div>
             <div id="qtd_hospedagem" class="col-md-6 hidden">
-              <label for="">Quantidade</label>
+              <label for=""><span class="tipo_desconto">Quantidade</span></label>
               <div class="form-group">
-                <input type="number" class="form-control" id="hospedagem" name="hospedagem" placeholder="Dias">
+                <input type="number" class="form-control form-control-sm" id="hospedagem" name="hospedagem"
+                  placeholder="Dias">
               </div>
             </div>
           </div>
@@ -98,9 +102,35 @@
               </div>
             </div>
             <div id="qtd_alimentacao" class="col-md-6 hidden">
-              <label for="">Quantidade</label>
+              <label for=""><span class="tipo_desconto">Quantidade</span></label>
               <div class="form-group">
-                <input type="number" class="form-control" id="alimentacao" name="alimentacao" placeholder="Dias">
+                <input type="number" class="form-control form-control-sm" id="alimentacao" name="alimentacao"
+                  placeholder="Dias">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label for="">Desconto?</label>
+              <div class="form-group">
+                <label class="custom-toggle">
+                  <input type="checkbox" id="check_desconto">
+                  <span class="custom-toggle-slider rounded-circle"></span>
+                </label>
+              </div>
+            </div>
+            <div id="qtd_desconto" class="col-md-6 hidden">
+              <div class="form-group">
+                <div class="form-check form-check-inline">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="radio" name="tipo_desconto" id="desc_value" value="value"
+                      checked="checked"><span class="tipo_desconto">Valor</span>
+                    <input class="form-check-input" type="radio" name="tipo_desconto" id="desc_percent"
+                      value="percent"><span class="tipo_desconto">%</span>
+                  </label>
+                </div>
+                <input type="number" class="form-control form-control-sm" id="desconto" name="desconto"
+                  placeholder="Valor">
               </div>
             </div>
           </div>
@@ -138,6 +168,12 @@ function resetModal() {
   $('#qtd_deslocamento').hide();
   $('#check_deslocamento').prop('checked', false);
 
+  $('#desconto').prop("required", false);
+  $('#desconto').val('');
+  $('#qtd_desconto').hide();
+  $('#check_desconto').prop('checked', false);
+  $('#desc_percent').prop("checked", false);
+  $('#desc_value').prop("checked", "checked");
 }
 
 function editInfo(id) {
@@ -171,6 +207,19 @@ function editInfo(id) {
         $('#qtd_hospedagem').show();
         $('#hospedagem').prop("required", true);
         $('#hospedagem').val(budget.Hospedagem);
+      }
+      if (budget.Desconto != null) {
+        $('#check_desconto').prop('checked', true);
+        $('#qtd_desconto').show();
+        if (budget.Desconto == 1) {
+          $('#desc_percent').prop("checked", false);
+          $('#desc_value').prop("checked", "checked");
+        } else {
+          $('#desc_value').prop("checked", false);
+          $('#desc_percent').prop("checked", "checked");
+        }
+        $('#desconto').prop("required", true);
+        $('#desconto').val(budget.valor_desconto);
       }
     }
   });
@@ -211,6 +260,25 @@ $(document).ready(function() {
       $('#deslocamento').prop("required", false);
     }
 
+  });
+
+  $('#check_desconto').click(function() {
+    var check = document.getElementById("check_desconto");
+    if (check.checked) {
+      $('#qtd_desconto').show();
+      $('#desconto').prop("required", true);
+    } else {
+      $('#qtd_desconto').hide();
+      $('#desconto').prop("required", false);
+    }
+  });
+
+  $('input[type=radio][name=tipo_desconto]').change(function() {
+    if (this.value == 'value') {
+      $('#desconto').attr("placeholder", "Valor");
+    } else if (this.value == 'percent') {
+      $('#desconto').attr("placeholder", "%");
+    }
   });
 });
 </script>
@@ -259,7 +327,7 @@ $(document).ready(function() {
                 </div>
               </th>
               <td class="cursor" data-toggle="collapse" data-target="#items_<?php echo $orcamento['id'] ?>">
-                <strong>R$ <?php echo number_format($orcamento['valor_total'], 2, ',', '.') ?></strong>
+                <strong>R$ <?php echo number_format($orcamento['valor_final'], 2, ',', '.') ?></strong>
               </td>
               <td>
                 <strong><?php echo $orcamento['createdAt'] ?></strong>
@@ -334,17 +402,42 @@ $(document).ready(function() {
 
                       <td><?php echo $valor['name']; ?></td>
                       <td><strong>R$ <?php echo number_format($valor['unitario'], 2, ',', '.'); ?></strong></td>
-                      <td><?php echo floatval($valor['weight_quantity']); ?></td>
+                      <td><?php echo floatval($valor['weight_quantity']); ?>x</td>
                       <td><strong>R$ <?php echo number_format($valor['weight_total_value'], 2, ',', '.'); ?></strong>
                       </td>
                     </tr>
                     <?php
                           }
                           ?>
+
+                    <?php if(isset($orcamento['discount_type'])) : ?>
                     <tr class="budget_total">
                       <td colspan="2"></td>
-                      <td>Valor Total:</td>
-                      <td><strong>R$ <?php echo $orcamento['valor_total']; ?></strong></td>
+                      <td>Valor Total de Serviços:</td>
+                      <td><strong>R$ <?php echo number_format($orcamento['valor_total'], 2, ',', '.'); ?></strong></td>
+                    </tr>
+                    <?php if($orcamento['discount_type'] == 1): ?>
+                    <tr class="budget_discount">
+                      <td colspan="2"></td>
+                      <td>Desconto:</td>
+                      <td>R$ <?php echo number_format($orcamento['discount_value'], 2, ',', '.'); ?></td>
+                    </tr>
+                    <?php else: ?>
+                    <tr class="budget_discount">
+                      <td colspan="2"></td>
+                      <td>Desconto:</td>
+                      <td>
+                        <?php echo 'R$ '.number_format($orcamento['total_discount'], 2, ',', '.').'  ('.number_format($orcamento['discount_value'], 2, ',', '.'); ?>)%
+                      </td>
+                    </tr>
+                    <?php endif; 
+                    endif;
+                    ?>
+
+                    <tr class="budget_final">
+                      <td colspan="2"></td>
+                      <td>Valor Final:</td>
+                      <td><strong>R$ <?php echo number_format($orcamento['valor_final'], 2, ',', '.'); ?></strong></td>
                     </tr>
                   </tbody>
                 </table>

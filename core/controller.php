@@ -31,4 +31,10 @@ class controller {
 		require 'views/'.$viewName.'.php';
 	}
 
+	public function _pp($string){
+		echo '<pre>';
+		print_r($string);
+		echo '</pre>';
+	}
+
 }

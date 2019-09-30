@@ -5,7 +5,7 @@
       <div class="card-header border-0 shadow">
         <h3 class="mb-0">Indicadores</h3>
       </div>
-      <div class="row dashboard-cards">
+      <!-- <div class="row dashboard-cards">
         <div class="col-xl-3 col-lg-6">
           <div class="card card-stats mb-4 mb-xl-0">
             <div class="card-body">
@@ -90,7 +90,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>

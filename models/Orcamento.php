@@ -9,13 +9,18 @@ class Orcamento extends Model
 		
 		$sql = $this->db->query("
 		SELECT b.id, own.name as owner, b.customer_name as customer, b.customer_email as email, DATE_FORMAT(b.creation_date, '%d/%m/%Y %H:%i') as createdAt, b.limit_date, 
-		st.name as status, b.status as status_id,
-		(SELECT sum(weight_total_value) FROM v_final_budget WHERE budget_id = b.id) as valor_total  
+		st.name as status, b.status as status_id, b.discount_type, b.discount_value,
+		(SELECT sum(weight_total_value) FROM v_final_budget WHERE budget_id = b.id) as valor_total,  
+		(SELECT DISTINCT(TOTAL) FROM v_final_budget WHERE budget_id = b.id) as valor_final,
+		(SELECT 
+			CASE `b`.`discount_type`
+				WHEN 2 THEN (sum(weight_total_value) - TOTAL)
+      END
+    	FROM v_final_budget WHERE budget_id = b.id  ) as total_discount  
 		FROM budget b 
 		JOIN users own ON b.owner_id = own.id
 		JOIN status st ON b.status = st.id
-		WHERE b.status IN (3,5,6,7)
-		 
+		WHERE b.status IN (".ORCAMENTO_PENDENTE.",".ORCAMENTO_REPROVADO.",".ORCAMENTO_CANCELADO.",".ORCAMENTO_EM_APROVACAO.")		 
 		ORDER BY createdAt
 		LIMIT ".(($page-1)*10).", 10");
 
@@ -29,7 +34,7 @@ class Orcamento extends Model
 		$row_count = 0;
 		$sql = $this->db->query("
 			SELECT count(*) as rows FROM budget b
-			WHERE b.status IN (3,5,6,7)");
+			WHERE b.status IN (".ORCAMENTO_PENDENTE.",".ORCAMENTO_REPROVADO.",".ORCAMENTO_CANCELADO.",".ORCAMENTO_EM_APROVACAO.")");
 
 		if ($sql->rowCount() > 0) {
 			$row_count = $sql->fetch();
@@ -49,7 +54,7 @@ class Orcamento extends Model
 		$sql->bindValue(":owner_id", $data['user']);
 		$sql->bindValue(":customer_name", $data['nome']);
 		$sql->bindValue(":customer_email", $data['email']);
-		$sql->bindValue(":status", 3); //Orçamento Pendente
+		$sql->bindValue(":status", ORCAMENTO_PENDENTE);
 		$sql->bindValue(":budget_id", $id);
 		$sql->execute();
 
@@ -87,13 +92,15 @@ class Orcamento extends Model
 	}
 
 	public function store($data){
-
+		
 		$sql = $this->db->prepare("INSERT INTO budget 
 			SET owner_id = :owner_id, 
 			customer_name = :customer_name, 
 			customer_email = :customer_email, 
 			creation_date = :creation_date, 
 			limit_date = :limit_date,
+			discount_type = :discount_type,
+			discount_value = :discount_value,
 			status = :status");
 
 		$sql->bindValue(":owner_id", $data['user']);
@@ -101,7 +108,9 @@ class Orcamento extends Model
 		$sql->bindValue(":customer_email", $data['email']);
 		$sql->bindValue(":creation_date", date("Y-m-d H:i:s", time()));
 		$sql->bindValue(":limit_date", date("Y-m-d H:i:s", time()));
-		$sql->bindValue(":status", 3); //Orçamento Pendente
+		$sql->bindValue(":discount_type", $data['desconto']['tipo_desconto']);
+		$sql->bindValue(":discount_value", $data['desconto']['valor_desconto']);
+		$sql->bindValue(":status", ORCAMENTO_PENDENTE);
 		$sql->execute();
 
 		$lastInsert = $this->db->lastInsertId();
@@ -178,9 +187,9 @@ class Orcamento extends Model
 	}
 
 	public function accept($budget_id){
-		$sql_consult = $this->db->query('SELECT * FROM budget WHERE id = ' . $budget_id . ' AND status IN (3,7)');
+		$sql_consult = $this->db->query('SELECT * FROM budget WHERE id = ' . $budget_id . ' AND status IN ('.ORCAMENTO_PENDENTE.','.ORCAMENTO_EM_APROVACAO.')');
 		if ($sql_consult->rowCount() > 0) {
-			$sql_update = $this->db->query("UPDATE budget SET status = 4 WHERE id = " . $budget_id);
+			$sql_update = $this->db->query("UPDATE budget SET status = ".ORCAMENTO_APROVADO." WHERE id = " . $budget_id);
 			$sql_update->execute();
 			return true;
 		} else {
@@ -189,9 +198,9 @@ class Orcamento extends Model
 	}
 
 	public function deny($budget_id){
-		$sql_consult = $this->db->query('SELECT * FROM budget WHERE id = ' . $budget_id . ' AND status IN (3,7)');
+		$sql_consult = $this->db->query('SELECT * FROM budget WHERE id = ' . $budget_id . ' AND status IN ('.ORCAMENTO_PENDENTE.','.ORCAMENTO_EM_APROVACAO.')');
 		if ($sql_consult->rowCount() > 0) {
-			$sql_update = $this->db->query("UPDATE budget SET status = 5 WHERE id = " . $budget_id);
+			$sql_update = $this->db->query("UPDATE budget SET status = ".ORCAMENTO_REPROVADO." WHERE id = " . $budget_id);
 			$sql_update->execute();
 			return true;
 		} else {
@@ -200,9 +209,9 @@ class Orcamento extends Model
 	}
 
 	public function sendOrcamentoByEmail($budget_id){
-		$sql_consult = $this->db->query('SELECT * FROM budget WHERE id = ' . $budget_id . ' AND status = 3');
+		$sql_consult = $this->db->query('SELECT * FROM budget WHERE id = ' . $budget_id . ' AND status = '.ORCAMENTO_PENDENTE);
 		if ($sql_consult->rowCount() > 0) {
-			$sql_update = $this->db->query("UPDATE budget SET status = 7 WHERE id = " . $budget_id);
+			$sql_update = $this->db->query("UPDATE budget SET status = ".ORCAMENTO_EM_APROVACAO." WHERE id = " . $budget_id);
 			$sql_update->execute();
 			return true;
 		} else {

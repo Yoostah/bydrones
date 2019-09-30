@@ -30,13 +30,26 @@ class orcamentoController extends controller
 			$area = ["item" => addslashes($_POST['tipo_area']), "value" => addslashes($_POST['tamanho_area'])];
 			$hospedagem = ["item" => 12, "value" => (isset($_POST['hospedagem']) && !empty($_POST['hospedagem'])) ? addslashes($_POST['hospedagem']) : null];
 			$alimentacao = ["item" => 13, "value" => (isset($_POST['alimentacao']) && !empty($_POST['alimentacao'])) ? addslashes($_POST['alimentacao']) : null];
+			
+			if (isset($_POST['desconto']) && !empty($_POST['desconto'])){
+				if($_POST['tipo_desconto'] === 'value' ){
+					$desconto = ['tipo_desconto' => FIXO, 'valor_desconto' => addslashes($_POST['desconto'])];	
+				}else{
+					$desconto = ['tipo_desconto' => PORCENTAGEM, 'valor_desconto' => addslashes($_POST['desconto'])];					
+				}
+			}else{
+				$desconto = null;
+			}
 
 			$dados = array(
 				'nome' => addslashes($_POST['nome']),
 				'email' => (isset($_POST['email']) && !empty($_POST['email'])) ? addslashes($_POST['email']) : null,
 				'user' => $user,
-				'servicos' => [$deslocamento, $area, $hospedagem, $alimentacao]
+				'servicos' => [$deslocamento, $area, $hospedagem, $alimentacao],
+				'desconto' => $desconto
 			);
+			//$this->_pp($dados);
+			//exit;
 			unset($_POST);
 			
 			if($id === null){

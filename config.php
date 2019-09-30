@@ -1,9 +1,16 @@
 <?php
+require 'globals.php';
 require 'environment.php';
 
 $config = array();
 if(ENVIRONMENT == 'development') {
 	define("BASE_URL", "http://localhost:8080/bydrones/");
+	$config['dbname'] = 'yoosta74_bydronesapp';
+	$config['host'] = 'localhost';
+	$config['dbuser'] = 'root';
+	$config['dbpass'] = '';
+} elseif(ENVIRONMENT == 'home') {
+	define("BASE_URL", "http://localhost/bydrones/");
 	$config['dbname'] = 'yoosta74_bydronesapp';
 	$config['host'] = 'localhost';
 	$config['dbuser'] = 'root';
